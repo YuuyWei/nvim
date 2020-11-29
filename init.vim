@@ -29,7 +29,7 @@ Plug 'tpope/vim-surround'
 " Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " On-demand loading
-" Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
 " Using a non-default branch
@@ -88,6 +88,7 @@ if has('gui_running')
 set mouse=a
 endif
 
+" 必须先下载im-select.exe
 if has('win32')
 augroup imeauto
   autocmd InsertLeave * :silent :!C:\\im-select\\im-select.exe 1033
