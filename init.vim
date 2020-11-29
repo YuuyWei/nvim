@@ -152,6 +152,9 @@ let g:which_key_map.f = { 'name' : '+file' }
 nnoremap <silent> <leader>fs :update<CR>
 let g:which_key_map.f.s = 'save-file'
 
+nnoremap <silent> <leader>ft :NERDTreeToggle<CR>
+let g:which_key_map.f.s = 'file-tree'
+
 nnoremap <silent> <leader>fd :vs $MYVIMRC<CR>
 let g:which_key_map.f.d = 'open-vimrc'
 nnoremap <silent> <leader>fv :source $MYVIMRC<CR>
