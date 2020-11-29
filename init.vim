@@ -44,9 +44,7 @@ Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 " Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
 " Plugin outside ~/.vim/plugged with post-update hook
-if has('unix')
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-endif
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Unmanaged plugin (manually installed and updated)
@@ -89,10 +87,15 @@ set smartcase
 if has('gui_running')
 set mouse=a
 endif
+
+if has('win32')
 augroup imeauto
-  autocmd InsertLeave * set imdisable
-  autocmd InsertEnter * set noimdisable
+  autocmd InsertLeave * :silent :!C:\\im-select\\im-select.exe 1033
+  autocmd InsertEnter * :silent :!C:\\im-select\\im-select.exe 2052
 augroup END
+endif
+
+
 " inoremap <ESC> <ESC> :set iminsert=2<CR>
 
 if has('unix')
