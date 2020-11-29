@@ -19,6 +19,7 @@ Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
 
 
 " Any valid git URL is allowed
@@ -43,7 +44,9 @@ Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 " Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
 " Plugin outside ~/.vim/plugged with post-update hook
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+if has('unix')
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+endif
 Plug 'junegunn/fzf.vim'
 
 " Unmanaged plugin (manually installed and updated)
@@ -83,9 +86,18 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-" set mouse=a
+if has('gui_running')
+set mouse=a
+endif
+augroup imeauto
+  autocmd InsertLeave * set imdisable
+  autocmd InsertEnter * set noimdisable
+augroup END
+" inoremap <ESC> <ESC> :set iminsert=2<CR>
 
+if has('unix')
 map <silent><F5> :call RunCode()<CR>
+endif
 
 " < 表示去掉文件的后缀
 func! RunCode()
@@ -201,19 +213,13 @@ let g:scrollstatus_symbol_track = ' '
 let g:scrollstatus_symbol_bar = '█'
 set laststatus=2
 
-" ## pendant
-" <F1> coc-fzf-list
-" <F2> coc-explorer
-" <F3> vista with coc
-" <F4> lazy git
 let g:vista_default_executive = 'coc'
-map <silent> <F3> :Vista!!<CR>
+
 let g:vista#renderer#icons = {
             \   "function": "\uf794",
             \   "variable": "\u0ec2",
             \  }
 
-"nnoremap <silent> <F4> :LazyGit<CR>
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -294,7 +300,7 @@ xmap <leader>la  <Plug>(coc-codeaction-selected)
 nmap <leader>la  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current buffer.
-nmap <leader>lac  <Plug>(coc-codeaction)
+" nmap <leader>la  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>lf  <Plug>(coc-fix-current)
 
@@ -394,3 +400,4 @@ let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not 
 let g:NERDToggleCheckAllLines = 1
 
+" End
