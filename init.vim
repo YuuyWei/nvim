@@ -2,7 +2,6 @@
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin(stdpath('data') . '/plugged')
-
 " Make sure you use single quotes
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
@@ -18,6 +17,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
+Plug 'machakann/vim-highlightedyank'
+Plug 'vim-scripts/argtextobj.vim'
 
 " Any valid git URL is allowed
 " Plug 'https://github.com/junegunn/vim-github-dashboard.git'
@@ -72,6 +73,8 @@ set noeb
 set softtabstop=4
 set shiftwidth=4
 set tabstop=4
+set expandtab
+set infercase
 set smartindent
 set cindent
 set nobackup
@@ -147,26 +150,23 @@ let g:which_key_map =  {}
 " =======================================================
 " You can pass a descriptive text to an existing mapping.
 
-let g:which_key_map.f = { 'name' : '+file' }
 
-nnoremap <silent> <leader>fs :update<CR>
-let g:which_key_map.f.s = 'save-file'
+let g:which_key_map.f = {
+			\ 'name': '+file',
+			\ 'f':    ['Files',           'fzf-files'],
+			\ 's':    ['update',          'save-files'],
+			\ 't':    ['NERDTreeToggle',  'tree-files'],
+			\ }
+nnoremap <silent> <leader>fc :edit $MYVIMRC<CR>
+let g:which_key_map.f.c = 'open-vimrc'
+nnoremap <silent> <leader>fr :source $MYVIMRC<CR>
+let g:which_key_map.f.r = 'reload-vimrc'
 
-nnoremap <silent> <leader>ft :NERDTreeToggle<CR>
-let g:which_key_map.f.s = 'file-tree'
-
-nnoremap <silent> <leader>fd :vs $MYVIMRC<CR>
-let g:which_key_map.f.d = 'open-vimrc'
-nnoremap <silent> <leader>fv :source $MYVIMRC<CR>
-let g:which_key_map.f.v = 'reload-vimrc'
-
-nnoremap <silent> <leader>oq  :copen<CR>
-nnoremap <silent> <leader>ol  :lopen<CR>
 let g:which_key_map.o = {
-	    \ 'name' : '+open',
-	    \ 'q' : 'open-quickfix'    ,
-	    \ 'l' : 'open-locationlist',
-	    \ }
+			\ 'name': '+open',
+			\ 'q':    [ 'copen',  'open-quickfix' ]    ,
+			\ 'l':    [  'lopen', 'open-locationlist' ],
+			\ }
 
 
 let g:which_key_map.w = {
@@ -204,19 +204,17 @@ let g:which_key_map.b = {
 	    \ }
 call which_key#register('<Space>', "g:which_key_map")
 
-let g:lightline ={
-	    \ 'active': {
-	    \ 'right': [
-	    \['lineinfo'],
-	    \['scroll']]
-	    \ },
-	    \ 'component_function':{
-	    \'scroll': 'ScrollStatus',
-	    \ },
-	    \ }
-let g:scrollstatus_size = 10
-let g:scrollstatus_symbol_track = ' '
-let g:scrollstatus_symbol_bar = '█'
+let g:lightline = {
+      \ 'colorscheme': 'one',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ }
+
 set laststatus=2
 "===============================================
 
@@ -239,5 +237,9 @@ let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not 
 let g:NERDToggleCheckAllLines = 1
 
-" End
+" FZF
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-line)
 
+" End
