@@ -80,6 +80,7 @@ set cindent
 set nobackup
 set autoread
 set nocompatible
+set foldmethod=syntax
 colorscheme one
 set termguicolors
 set wildmenu
