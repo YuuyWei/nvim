@@ -111,10 +111,10 @@ endif
 func! RunCode()
     exec "w"
     if &filetype == 'c'
-	exec '%g++ % -o %<'
+	exec '!gcc -Werror % -o %<'
 	exec '!time ./%<'
     elseif &filetype == 'c++'
-	exec '%g++ % -o %<'
+	exec '!g++ -Werror % -o %<'
 	exec '!time ./%<'
     elseif &filetype == 'java'
 	exec '!javac %'
