@@ -159,10 +159,19 @@ let g:which_key_map.f = {
 			\ 's':    ['update',          'save-files'],
 			\ 't':    ['NERDTreeToggle',  'tree-files'],
 			\ }
-nnoremap <silent> <leader>fc :edit $MYVIMRC<CR>
-let g:which_key_map.f.c = 'open-vimrc'
-nnoremap <silent> <leader>fr :source $MYVIMRC<CR>
-let g:which_key_map.f.r = 'reload-vimrc'
+
+let g:which_key_map.v = {
+            \'name': '+vim',
+            \}
+nnoremap <silent> <leader>vc :edit $MYVIMRC<CR>
+let g:which_key_map.v.c = 'open-vimrc'
+nnoremap <silent> <leader>vr :source $MYVIMRC<CR>
+let g:which_key_map.v.r = 'reload-vimrc'
+func! VimConfigGitPush()
+	exec "Gwrite"
+	exec "Gcommit -m 'config update'"
+	exec "Gpush -u origin main"
+endfunc
 
 let g:which_key_map.o = {
 			\ 'name': '+open',
