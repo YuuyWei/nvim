@@ -158,13 +158,15 @@ let g:which_key_map.f = {
 			\ }
 
 let g:which_key_map.v = {
-            \'name': '+vim',
-			\'s'   : ['call VimConfigGitPush', 'save&push-config']
+            \'name': '+vimrc',
+			\'l'   : ['Gpull', 'pull-vimrc']
             \}
 nnoremap <silent> <leader>vc :edit $MYVIMRC<CR>
 let g:which_key_map.v.c = 'open-vimrc'
 nnoremap <silent> <leader>vr :source $MYVIMRC<CR>
 let g:which_key_map.v.r = 'reload-vimrc'
+nnoremap <silent> <leader>vs :call VimConfigGitPush()<CR>
+let g:which_key_map.v.s = 'save&push-vimrc'
 func! VimConfigGitPush()
 	exec "Gwrite"
 	exec "Gcommit -m 'config update'"
