@@ -20,6 +20,7 @@ Plug 'tpope/vim-surround'
 Plug 'machakann/vim-highlightedyank'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'ervandew/supertab'
+Plug 'brglng/vim-im-select'
 
 " Any valid git URL is allowed
 " Plug 'https://github.com/junegunn/vim-github-dashboard.git'
@@ -97,12 +98,8 @@ endif
 
 " 必须先下载im-select.exe
 if has('win32')
-    augroup imeauto
-	autocmd InsertLeave * :silent :!C:\\im-select\\im-select.exe 1033
-	autocmd InsertEnter * :silent :!C:\\im-select\\im-select.exe 2052
-    augroup END
-elseif has('unix')
-	" inoremap <ESC> <ESC> :set iminsert=0<CR>
+let g:im_select_command = "C:\\im-select\\im-select.exe"
+let g:im_select_default = "1033"
 endif
 
 if has('unix')
