@@ -54,8 +54,8 @@ Plug 'junegunn/fzf.vim'
 " Initialize plugin system
 call plug#end()
 
-" 使得复制粘贴不会自动注释
-set paste
+" 使得复制粘贴不会自动注释，会莫名奇妙导致autoindent无效
+" set paste
 set hidden
 set nobackup
 set nowritebackup
