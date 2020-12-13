@@ -102,7 +102,7 @@ if has('win32')
 	autocmd InsertEnter * :silent :!C:\\im-select\\im-select.exe 2052
     augroup END
 elseif has('unix')
-	inoremap <ESC> <ESC> :set iminsert=0<CR>
+	" inoremap <ESC> <ESC> :set iminsert=0<CR>
 endif
 
 if has('unix')
