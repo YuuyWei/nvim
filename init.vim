@@ -19,6 +19,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'machakann/vim-highlightedyank'
 Plug 'vim-scripts/argtextobj.vim'
+Plug 'ervandew/supertab'
 
 " Any valid git URL is allowed
 " Plug 'https://github.com/junegunn/vim-github-dashboard.git'
@@ -75,6 +76,7 @@ set shiftwidth=4
 set tabstop=4
 set expandtab
 set infercase
+set autoindent
 set smartindent
 set cindent
 set nobackup
@@ -99,10 +101,9 @@ if has('win32')
 	autocmd InsertLeave * :silent :!C:\\im-select\\im-select.exe 1033
 	autocmd InsertEnter * :silent :!C:\\im-select\\im-select.exe 2052
     augroup END
+elseif has('unix')
+	inoremap <ESC> <ESC> :set iminsert=0<CR>
 endif
-
-
-" inoremap <ESC> <ESC> :set iminsert=2<CR>
 
 if has('unix')
     map <silent><F5> :call RunCode()<CR>
