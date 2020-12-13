@@ -179,7 +179,6 @@ let g:which_key_map.o = {
 			\ 'l':    [  'lopen', 'open-locationlist' ],
 			\ }
 
-
 let g:which_key_map.w = {
 	    \ 'name' : '+windows',
 	    \ 'w' : ['<C-W>w',     'other-window']          ,
