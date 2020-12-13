@@ -159,6 +159,7 @@ let g:which_key_map.f = {
 
 let g:which_key_map.v = {
             \'name': '+vim',
+			\'s'   : ['call VimConfigGitPush', 'save&push-config']
             \}
 nnoremap <silent> <leader>vc :edit $MYVIMRC<CR>
 let g:which_key_map.v.c = 'open-vimrc'
