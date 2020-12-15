@@ -41,7 +41,6 @@ Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 " Plugin options
 " Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
-
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -95,10 +94,8 @@ if has('gui_running')
 endif
 
 " 必须先下载im-select.exe
-if has('win32')
-    let g:im_select_command = "C:\\im-select\\im-select.exe"
-    let g:im_select_default = "1033"
-endif
+let g:im_select_command = "C:\\im-select\\im-select.exe"
+let g:im_select_default = "1033"
 
 if has('unix')
     map <silent><F5> :call RunCode()<CR>
