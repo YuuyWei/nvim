@@ -30,7 +30,7 @@ Plug 'brglng/vim-im-select'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'mbbill/undotree'
 Plug 'vimwiki/vimwiki'
-Plug 'honza/vim-snippets'
+" Plug 'honza/vim-snippets'
 
 " Any valid git URL is allowed
 " Plug 'https://github.com/junegunn/vim-github-dashboard.git'
