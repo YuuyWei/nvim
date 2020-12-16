@@ -13,25 +13,30 @@ endif
 call plug#begin(stdpath('data') . '/plugged')
 " Make sure you use single quotes
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-Plug 'ojroques/vim-scrollstatus'
-Plug 'junegunn/vim-easy-align'
-Plug 'preservim/nerdcommenter'
-Plug 'itchyny/lightline.vim'
-Plug 'rakr/vim-one'
-Plug 'liuchengxu/vista.vim'
-Plug 'liuchengxu/vim-which-key' "不能按需加载，否则which_key#register找不到
-Plug 'mhinz/vim-startify'
-Plug 'tpope/vim-fugitive'
+"
+" color scheme
 Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'machakann/vim-highlightedyank'
+Plug 'itchyny/lightline.vim'
+Plug 'mhinz/vim-startify'
+Plug 'rakr/vim-one'
+
+" vim easy editting
+Plug 'junegunn/vim-easy-align'
+Plug 'liuchengxu/vista.vim'
+Plug 'preservim/nerdcommenter'
+Plug 'liuchengxu/vim-which-key' "不能按需加载，否则which_key#register找不到
+Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
-Plug 'machakann/vim-highlightedyank'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'brglng/vim-im-select'
-Plug 'dhruvasagar/vim-table-mode'
 Plug 'mbbill/undotree'
+
+" markdown and wiki
+Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
 Plug 'vimwiki/vimwiki'
-Plug 'honza/vim-snippets'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install()  }, 'for': ['markdown', 'vim-plug'] }
 
 " Any valid git URL is allowed
 " Plug 'https://github.com/junegunn/vim-github-dashboard.git'
@@ -47,6 +52,7 @@ Plug 'honza/vim-snippets'
 " Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
+Plug 'honza/vim-snippets'
 
 " Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
 " Plug 'fatih/vim-go', { 'tag': '*' }
@@ -160,49 +166,51 @@ let g:which_key_map =  {}
 
 
 let g:which_key_map.f = {
-            \ 'name': '+file',
-            \ 'f':    ['Files',           'fzf-files'],
-            \ 's':    ['update',          'save-files'],
+            \ 'name': '+file/git',
+            \ 'f':    ['Files',   'fzf-files'],
+            \ 's':    ['update',  'save-files'],
+            \ 'l':    ['Gpull',   'git-pull'],
+            \ 'w':    ['Gwrite',  'git-write'],
+            \ 'c':    ['Gcommit', 'git-commit'],
             \ }
-
-let g:which_key_map.v = {
-            \ 'name': '+vimrc',
-            \ 'l':    ['Gpull',          'pull-vimrc'],
-            \ 'c':    'open-vimrc',
-            \ 'r':    'reload-vimrc',
-            \ 's':    'save&push-vimrc',
-            \ 'q':    [ 'copen',         'open-quickfix' ]    ,
-            \ 'o':    [  'lopen',        'open-locationlist' ],
-            \}
-
-nnoremap <silent> <leader>vc :edit $MYVIMRC<CR>
-nnoremap <silent> <leader>vr :source $MYVIMRC<CR>
-nnoremap <silent> <leader>vs :call VimConfigGitPush()<CR>
+let g:which_key_map.f.p = 'git-save&push'
+nnoremap <silent> <leader>fp :call VimConfigGitPush()<CR>
 func! VimConfigGitPush()
     exec "Gwrite"
-    exec "Gcommit -m 'config update'"
+    exec "Gcommit -m 'information update'"
     exec "Gpush -u origin main"
 endfunc
 
+
+let g:which_key_map.v = {
+            \ 'name': '+vimrc',
+            \ 'c':    'open-vimrc',
+            \ 'r':    'reload-vimrc',
+            \}
+nnoremap <silent> <leader>vc :edit $MYVIMRC<CR>
+nnoremap <silent> <leader>vr :source $MYVIMRC<CR>
+
 let g:which_key_map.i = {
             \ 'name' : '+windows',
-            \ 'w' : ['<C-W>w',     'other-window']          ,
-            \ 'd' : ['<C-W>c',     'delete-window']         ,
-            \ '-' : ['<C-W>s',     'split-window-below']    ,
-            \ '|' : ['<C-W>v',     'split-window-right']    ,
-            \ '2' : ['<C-W>v',     'layout-double-columns'] ,
-            \ 'h' : ['<C-W>h',     'window-left']           ,
-            \ 'j' : ['<C-W>j',     'window-below']          ,
-            \ 'l' : ['<C-W>l',     'window-right']          ,
-            \ 'k' : ['<C-W>k',     'window-up']             ,
-            \ 'H' : ['<C-W>5<',    'expand-window-left']    ,
-            \ 'J' : [':resize +5', 'expand-window-below']   ,
-            \ 'L' : ['<C-W>5>',    'expand-window-right']   ,
-            \ 'K' : [':resize -5', 'expand-window-up']      ,
-            \ '=' : ['<C-W>=',     'balance-window']        ,
-            \ 's' : ['<C-W>s',     'split-window-below']    ,
-            \ 'v' : ['<C-W>v',     'split-window-right']    ,
-            \ '?' : ['Windows',    'fzf-window']            ,
+            \ 'o': [  'lopen',  'open-locationlist' ],
+            \ 'q': [ 'copen',   'open-quickfix' ]    ,
+            \ 'w': ['<C-W>w',     'other-window']          ,
+            \ 'd': ['<C-W>c',     'delete-window']         ,
+            \ '-': ['<C-W>s',     'split-window-below']    ,
+            \ '|': ['<C-W>v',     'split-window-right']    ,
+            \ '2': ['<C-W>v',     'layout-double-columns'] ,
+            \ 'h': ['<C-W>h',     'window-left']           ,
+            \ 'j': ['<C-W>j',     'window-below']          ,
+            \ 'l': ['<C-W>l',     'window-right']          ,
+            \ 'k': ['<C-W>k',     'window-up']             ,
+            \ 'H': ['<C-W>5<',    'expand-window-left']    ,
+            \ 'J': [':resize +5', 'expand-window-below']   ,
+            \ 'L': ['<C-W>5>',    'expand-window-right']   ,
+            \ 'K': [':resize -5', 'expand-window-up']      ,
+            \ '=': ['<C-W>=',     'balance-window']        ,
+            \ 's': ['<C-W>s',     'split-window-below']    ,
+            \ 'v': ['<C-W>v',     'split-window-right']    ,
+            \ '?': ['Windows',    'fzf-window']            ,
             \ }
 
 let g:which_key_map.b = {
@@ -431,4 +439,99 @@ let g:which_key_map.w[' '] = {
 let g:vimwiki_list = [{'path': '~/vimwiki/',
                       \ 'syntax': 'markdown', 'ext': '.md'}]
 
-" End
+" markdown preview 
+" set to 1, nvim will open the preview window after entering the markdown buffer
+" default: 0
+let g:mkdp_auto_start = 0
+
+" set to 1, the nvim will auto close current preview window when change
+" from markdown buffer to another buffer
+" default: 1
+let g:mkdp_auto_close = 1
+
+" set to 1, the vim will refresh markdown when save the buffer or
+" leave from insert mode, default 0 is auto refresh markdown as you edit or
+" move the cursor
+" default: 0
+let g:mkdp_refresh_slow = 0
+
+" set to 1, the MarkdownPreview command can be use for all files,
+" by default it can be use in markdown file
+" default: 0
+let g:mkdp_command_for_global = 0
+
+" set to 1, preview server available to others in your network
+" by default, the server listens on localhost (127.0.0.1)
+" default: 0
+let g:mkdp_open_to_the_world = 0
+
+" use custom IP to open preview page
+" useful when you work in remote vim and preview on local browser
+" more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
+" default empty
+let g:mkdp_open_ip = ''
+
+" specify browser to open preview page
+" default: ''
+let g:mkdp_browser = ''
+
+" set to 1, echo preview page url in command line when open preview page
+" default is 0
+let g:mkdp_echo_preview_url = 0
+
+" a custom vim function name to open preview page
+" this function will receive url as param
+" default is empty
+let g:mkdp_browserfunc = ''
+
+" options for markdown render
+" mkit: markdown-it options for render
+" katex: katex options for math
+" uml: markdown-it-plantuml options
+" maid: mermaid options
+" disable_sync_scroll: if disable sync scroll, default 0
+" sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
+"   middle: mean the cursor position alway show at the middle of the preview page
+"   top: mean the vim top viewport alway show at the top of the preview page
+"   relative: mean the cursor position alway show at the relative positon of the preview page
+" hide_yaml_meta: if hide yaml metadata, default is 1
+" sequence_diagrams: js-sequence-diagrams options
+" content_editable: if enable content editable for preview page, default: v:false
+" disable_filename: if disable filename header for preview page, default: 0
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'sequence_diagrams': {},
+    \ 'flowchart_diagrams': {},
+    \ 'content_editable': v:false,
+    \ 'disable_filename': 0
+    \ }
+
+" use a custom markdown style must be absolute path
+" like '/Users/username/markdown.css' or expand('~/markdown.css')
+let g:mkdp_markdown_css = ''
+
+" use a custom highlight style must absolute path
+" like '/Users/username/highlight.css' or expand('~/highlight.css')
+let g:mkdp_highlight_css = ''
+
+" use a custom port to start server or random for empty
+let g:mkdp_port = ''
+
+" preview page title
+" ${name} will be replace with the file name
+let g:mkdp_page_title = '「${name}」'
+
+" recognized filetypes
+" these filetypes will have MarkdownPreview... commands
+let g:mkdp_filetypes = ['markdown']
+
+" keymaps
+nnoremap <silent> <leader>mp :<Plug>MarkdownPreview<CR>
+" nmap <M-s> <Plug>MarkdownPreviewStop
+" nmap <C-p> <Plug>MarkdownPreviewToggle
