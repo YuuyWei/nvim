@@ -162,7 +162,6 @@ let g:which_key_map.f = {
             \ 'name': '+file',
             \ 'f':    ['Files',           'fzf-files'],
             \ 's':    ['update',          'save-files'],
-            \ 't':    ['NERDTreeToggle',  'tree-files'],
             \ }
 
 let g:which_key_map.v = {
@@ -184,7 +183,7 @@ func! VimConfigGitPush()
     exec "Gpush -u origin main"
 endfunc
 
-let g:which_key_map.w = {
+let g:which_key_map.i = {
             \ 'name' : '+windows',
             \ 'w' : ['<C-W>w',     'other-window']          ,
             \ 'd' : ['<C-W>c',     'delete-window']         ,
@@ -312,13 +311,13 @@ augroup end
 
 " Applying codeAction to the selected region.
 " Example: `<leader>aap` for current paragraph
-xmap <leader>pa  <Plug>(coc-codeaction-selected)
-nmap <leader>pa  <Plug>(coc-codeaction-selected)
+xmap <leader>la  <Plug>(coc-codeaction-selected)
+nmap <leader>la  <Plug>(coc-codeaction-selected)
 
 " Remap keys for applying codeAction to the current buffer.
 " nmap <leader>pa  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
-nmap <leader>pq  <Plug>(coc-fix-current)
+nmap <leader>lq  <Plug>(coc-fix-current)
 
 " Map function and class text objects
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
@@ -362,23 +361,23 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
 " Show all diagnostics.
-nnoremap <silent><nowait> <leader>pld  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <leader>lld  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent><nowait> <leader>ple  :<C-u>CocList extensions<cr>
+nnoremap <silent><nowait> <leader>lle  :<C-u>CocList extensions<cr>
 " Show commands.
-nnoremap <silent><nowait> <leader>plc  :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> <leader>llc  :<C-u>CocList commands<cr>
 " Find symbol of current document.
-nnoremap <silent><nowait> <leader>plo  :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <leader>llo  :<C-u>CocList outline<cr>
 " Search workleader symbols.
-nnoremap <silent><nowait> <leader>pls  :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> <leader>lls  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
-nnoremap <silent><nowait> <leader>plj  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent><nowait> <leader>plk  :<C-u>CocPrev<CR>
+nnoremap <silent><nowait> <leader>llj  :<C-u>CocNext<CR>
+" Do default action for previous ilem.
+nnoremap <silent><nowait> <leader>llk  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent><nowait> <leader>plr  :<C-u>CocListResume<CR>
+nnoremap <silent><nowait> <leader>llr  :<C-u>CocListResume<CR>
 
-let g:which_key_map.p = {
+let g:which_key_map.l = {
             \ 'name': '+coc-lsp',
             \ 'r':    'coc-rename'    ,
             \ 'f':    'coc-format-selected',
@@ -386,7 +385,7 @@ let g:which_key_map.p = {
             \ 'q':    'coc-quickfix',
             \ }
 
-let g:which_key_map.p.l = {
+let g:which_key_map.l.l = {
             \ 'name': '+coc-list',
             \ 'd':    'coc-list-diagnostics',
             \ 'e':    'coc-list-extensions',
@@ -397,5 +396,31 @@ let g:which_key_map.p.l = {
             \ 'k':    'coc-list-previous',
             \ 'r':    'coc-list-resume',
             \ }
+
+" vim-table-mode
+let g:which_key_map.t = {
+            \ 'name': '+table-mode',
+            \ 'm':    'table-mode-toggle',
+            \ 't':    'table-mode-tablize',
+            \ }
+
+" vim-wiki
+let g:which_key_map.w = {
+            \ 'name': '+wiki',
+            \ 'i':    'wiki-diary-index',
+            \ 't':    'wiki-table-index',
+            \ 'w':    'wiki-index',
+            \ 's':    'wiki-select',
+            \ }
+
+let g:which_key_map.w[' '] = {
+            \ 'name': '+wiki-diary',
+            \ 'i':    'wiki-diary-generate-links',
+            \ 't':    'wiki-diary-tablemake-notes',
+            \ 'w':    'wiki-diary-make-notes',
+            \ 'm':    'wiki-diary-make-tomorrow-notes',
+            \ 'y':    'wiki-diary-make-yesterday-notes',
+            \ }
+
 
 " End
