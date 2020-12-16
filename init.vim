@@ -412,6 +412,11 @@ let g:which_key_map.w = {
             \ 't':    'wiki-table-index',
             \ 'w':    'wiki-index',
             \ 's':    'wiki-select',
+            \ 'd':    'wiki-delete-file',
+            \ 'h':    'wiki-2HTML',
+            \ 'hh':    'wiki-2HTML&browse',
+            \ 'n':    'wiki-goto',
+            \ 'r':    'wiki-rename-file',
             \ }
 
 let g:which_key_map.w[' '] = {
@@ -423,5 +428,7 @@ let g:which_key_map.w[' '] = {
             \ 'y':    'wiki-diary-make-yesterday-notes',
             \ }
 
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
 
 " End
