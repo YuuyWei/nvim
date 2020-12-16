@@ -1,3 +1,11 @@
+" if existing no vim-plug, then install
+if empty(glob(stdpath('data') . '/plugged'))
+    if has('unix')
+        !sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    endif
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
@@ -19,6 +27,9 @@ Plug 'tpope/vim-surround'
 Plug 'machakann/vim-highlightedyank'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'brglng/vim-im-select'
+Plug 'dhruvasagar/vim-table-mode'
+Plug 'mbbill/undotree'
+Plug 'vimwiki/vimwiki'
 
 " Any valid git URL is allowed
 " Plug 'https://github.com/junegunn/vim-github-dashboard.git'
@@ -97,6 +108,7 @@ endif
 let g:im_select_command = "C:\\im-select\\im-select.exe"
 let g:im_select_default = "1033"
 
+
 if has('unix')
     map <silent><F5> :call RunCode()<CR>
 endif
@@ -153,26 +165,23 @@ let g:which_key_map.f = {
             \ }
 
 let g:which_key_map.v = {
-            \'name': '+vimrc',
-            \'l'   : ['Gpull', 'pull-vimrc']
+            \ 'name': '+vimrc',
+            \ 'l':    ['Gpull',          'pull-vimrc'],
+            \ 'c':    'open-vimrc',
+            \ 'r':    'reload-vimrc',
+            \ 's':    'save&push-vimrc',
+            \ 'q':    [ 'copen',         'open-quickfix' ]    ,
+            \ 'o':    [  'lopen',        'open-locationlist' ],
             \}
+
 nnoremap <silent> <leader>vc :edit $MYVIMRC<CR>
-let g:which_key_map.v.c = 'open-vimrc'
 nnoremap <silent> <leader>vr :source $MYVIMRC<CR>
-let g:which_key_map.v.r = 'reload-vimrc'
 nnoremap <silent> <leader>vs :call VimConfigGitPush()<CR>
-let g:which_key_map.v.s = 'save&push-vimrc'
 func! VimConfigGitPush()
     exec "Gwrite"
     exec "Gcommit -m 'config update'"
     exec "Gpush -u origin main"
 endfunc
-
-let g:which_key_map.o = {
-            \ 'name': '+open',
-            \ 'q':    [ 'copen',  'open-quickfix' ]    ,
-            \ 'l':    [  'lopen', 'open-locationlist' ],
-            \ }
 
 let g:which_key_map.w = {
             \ 'name' : '+windows',
@@ -291,12 +300,6 @@ endfunction
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" Symbol renaming.
-nmap <leader>pr <Plug>(coc-rename)
-
-" Formatting selected code.
-xmap <leader>pf  <Plug>(coc-format-selected)
-nmap <leader>pf  <Plug>(coc-format-selected)
 
 augroup mygroup
     autocmd!
