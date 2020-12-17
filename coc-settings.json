@@ -5,6 +5,6 @@
     "snippets.extends": {
         "cpp": ["c"],
         "vimwiki": ["markdown"]
-    }
-
+    },
+    "suggest.minTriggerInputLength": 2
 }
