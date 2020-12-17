@@ -6,7 +6,6 @@ if empty(glob(stdpath('data') . '/plugged'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin(stdpath('data') . '/plugged')
@@ -202,6 +201,9 @@ set smartcase
 if has('gui_running')
     set mouse=a
 endif
+" if has('win32')
+"     set shell=powershell.exe
+" endif
 
 " 必须先下载im-select.exe
 let g:im_select_command = "C:\\im-select\\im-select.exe"
@@ -455,8 +457,8 @@ let g:which_key_map.w[' '] = {
             \ 'y':    'wiki-diary-make-yesterday-notes',
             \ }
 
-let g:vimwiki_list = [{'path': '~/vimwiki/',
-                      \ 'syntax': 'markdown', 'ext': '.md'}]
+" let g:vimwiki_list = [{'path': '~/vimwiki/',
+"                       \ 'syntax': 'markdown', 'ext': '.md'}]
 
 " markdown preview 
 " set to 1, nvim will open the preview window after entering the markdown buffer
@@ -562,17 +564,17 @@ let g:which_key_map.m = {
             \}
 
 " easy align
-function! s:easy_align_1st_eq(type, ...)
-    '[,']EasyAlign=
-endfunction
-nnoremap <Leader>= :set opfunc=<SID>easy_align_1st_eq<Enter>g@
-let g:which_key_map['='] = 'easy-align-1st-eq'
-
-function! s:easy_align_1st_colon(type, ...)
-    '[,']EasyAlign:
-endfunction
-nnoremap <Leader>: :set opfunc=<SID>easy_align_1st_colon<Enter>g@']]'
-let g:which_key_map[':'] = 'easy-align-1st-colon'
+" function! s:easy_align_1st_eq(type, ...)
+"     '[,']EasyAlign=
+" endfunction
+" nnoremap <Leader>= :set opfunc=<SID>easy_align_1st_eq<Enter>g@
+" let g:which_key_map['='] = 'easy-align-1st-eq'
+"
+" function! s:easy_align_1st_colon(type, ...)
+"     '[,']EasyAlign:
+" endfunction
+" nnoremap <Leader>: :set opfunc=<SID>easy_align_1st_colon<Enter>g@']]'
+" let g:which_key_map[':'] = 'easy-align-1st-colon'
 
 let g:easy_align_delimiters = {
 \ '>': { 'pattern': '>>\|=>\|>' },
