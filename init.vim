@@ -534,3 +534,16 @@ let g:which_key_map.m = {
             \ 's' : 'markdown-preview-stop',
             \ 't' : 'markdown-preview-toggle',
             \}
+
+" easy align
+function! s:easy_align_1st_eq(type, ...)
+    '[,']EasyAlign=
+endfunction
+nnoremap <Leader>= :set opfunc=<SID>easy_align_1st_eq<Enter>g@
+let g:which_key_map['='] = 'easy-align-1st-eq'
+
+function! s:easy_align_1st_colon(type, ...)
+    '[,']EasyAlign:
+endfunction
+nnoremap <Leader>: :set opfunc=<SID>easy_align_1st_colon<Enter>g@']]'
+let g:which_key_map[':'] = 'easy-align-1st-colon'
