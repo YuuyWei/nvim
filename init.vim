@@ -34,7 +34,7 @@ Plug 'brglng/vim-im-select'
 Plug 'mbbill/undotree'
 
 " markdown and wiki
-Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
+" Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
 Plug 'vimwiki/vimwiki'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install()  }, 'for': ['markdown', 'vim-plug'] }
 
@@ -406,13 +406,6 @@ let g:which_key_map.l.l = {
             \ 'r':    'coc-list-resume',
             \ }
 
-" vim-table-mode
-let g:which_key_map.t = {
-            \ 'name': '+table-mode',
-            \ 'm':    'table-mode-toggle',
-            \ 't':    'table-mode-tablize',
-            \ }
-
 " vim-wiki
 let g:which_key_map.w = {
             \ 'name': '+wiki',
@@ -532,6 +525,12 @@ let g:mkdp_page_title = '「${name}」'
 let g:mkdp_filetypes = ['markdown']
 
 " keymaps
-nnoremap <silent> <leader>mp :<Plug>MarkdownPreview<CR>
-" nmap <M-s> <Plug>MarkdownPreviewStop
-" nmap <C-p> <Plug>MarkdownPreviewToggle
+nmap <leader>mp <Plug>MarkdownPreview
+nmap <leader>ms <Plug>MarkdownPreviewStop
+nmap <leader>mt <Plug>MarkdownPreviewToggle
+let g:which_key_map.m = {
+            \ 'name' : '+markdown-preview',
+            \ 'p' : 'markdown-preview',
+            \ 's' : 'markdown-preview-stop',
+            \ 't' : 'markdown-preview-toggle',
+            \}
