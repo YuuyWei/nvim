@@ -201,9 +201,11 @@ set smartcase
 if has('gui_running')
     set mouse=a
 endif
-" if has('win32')
-"     set shell=powershell.exe
-" endif
+if has('win32')
+    set shell=powershell shellquote=( shellpipe=\| shellxquote=
+    set shellcmdflag=-NoLogo\ -NoProfile\ -ExecutionPolicy\ RemoteSigned\ -Command
+    set shellredir=\|\ Out-File\ -Encoding\ UTF8
+endif
 
 " 必须先下载im-select.exe
 let g:im_select_command = "C:\\im-select\\im-select.exe"
