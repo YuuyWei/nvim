@@ -30,6 +30,8 @@ Plug 'tpope/vim-surround'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'brglng/vim-im-select'
 Plug 'mbbill/undotree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
 
 " wiki
 " Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
@@ -42,7 +44,6 @@ Plug 'vimwiki/vimwiki'
 " Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " On-demand loading
-Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
 " Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
 " Using a non-default branch
@@ -82,6 +83,8 @@ let g:which_key_map =  {}
 " =======================================================
 " You can pass a descriptive text to an existing mapping.
 
+" nerdtree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 let g:which_key_map.f = {
             \ 'name': '+file/git',
