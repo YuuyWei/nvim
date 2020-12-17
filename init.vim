@@ -459,8 +459,8 @@ let g:which_key_map.w[' '] = {
             \ 'y':    'wiki-diary-make-yesterday-notes',
             \ }
 
-" let g:vimwiki_list = [{'path': '~/vimwiki/',
-"                       \ 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+                      \ 'syntax': 'markdown', 'ext': '.md'}]
 
 " markdown preview 
 " set to 1, nvim will open the preview window after entering the markdown buffer
