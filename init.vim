@@ -6,7 +6,7 @@ if empty(glob(stdpath('data') . '/plugged'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" Specify a directory for plugins
+
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin(stdpath('data') . '/plugged')
@@ -68,87 +68,6 @@ Plug 'junegunn/fzf.vim'
 
 " Initialize plugin system
 call plug#end()
-
-
-" basic setting
-" 使得复制粘贴不会自动注释，会莫名奇妙导致autoindent无效
-set pastetoggle=<F11>
-set hidden
-set nobackup
-set nowritebackup
-set updatetime=300
-set timeoutlen=500
-set shortmess+=c
-set nu
-filetype plugin on
-" 设置为双字宽显示，否则无法完整显示如:☆
-set ambiwidth=double
-set t_ut= " 防止vim背景颜色错误
-set showmatch " 高亮匹配括号
-set matchtime=1
-set report=0
-set ignorecase
-set noeb
-set softtabstop=4
-set shiftwidth=4
-set tabstop=4
-set expandtab
-set infercase
-set autoindent
-set smartindent
-set cindent
-set nobackup
-set autoread
-set nocompatible
-set foldmethod=marker
-colorscheme one
-set termguicolors
-set wildmenu
-set wildmode=full
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
-if has('gui_running')
-    set mouse=a
-endif
-
-" 必须先下载im-select.exe
-let g:im_select_command = "C:\\im-select\\im-select.exe"
-let g:im_select_default = "1033"
-
-
-
-if has('unix')
-    map <silent><F5> :call RunCode()<CR>
-endif
-
-" < 表示去掉文件的后缀
-func! RunCode()
-    exec "w"
-    if &filetype == 'c'
-        exec '!gcc -Werror % -o %<'
-        exec '!time ./%<'
-    elseif &filetype == 'c++'
-        exec '!g++ -Werror % -o %<'
-        exec '!time ./%<'
-    elseif &filetype == 'java'
-        exec '!javac %'
-        exec '!time java %:.:r'
-    elseif &filetype == 'python'
-        exec '!time python3 %'
-    elseif &filetype == 'go'
-        exec '!time go run %'
-    elseif &filetype == 'vim'
-        exec 'source ~/.config/nvim/init.vim'
-        exec 'PlugInstall'
-    elseif &filetype == 'rust'
-        exec '!cargo run'
-    endif
-endfunc
-
-nmap ga <Plug>(EasyAlign)
-xmap ga <Plug>(EasyAlign)
 
 let g:mapleader = "\<Space>"
 
@@ -240,7 +159,89 @@ let g:lightline = {
             \ }
 
 set laststatus=2
+
+" basic setting
+" 使得复制粘贴不会自动注释，会莫名奇妙导致autoindent无效
+set pastetoggle=<f12>
+set hidden
+set nobackup
+set nowritebackup
+set updatetime=300
+set timeoutlen=500
+set shortmess+=c
+set nu
+filetype plugin on
+" 设置为双字宽显示，否则无法完整显示如:☆
+set ambiwidth=double
+set t_ut= " 防止vim背景颜色错误
+set showmatch " 高亮匹配括号
+set matchtime=1
+set report=0
+set ignorecase
+set noeb
+set softtabstop=4
+set shiftwidth=4
+set tabstop=4
+set expandtab
+set infercase
+set autoindent
+set smartindent
+set cindent
+set nobackup
+set autoread
+set nocompatible
+set foldmethod=marker
+colorscheme one
+set termguicolors
+set wildmenu
+set wildmode=full
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+if has('gui_running')
+    set mouse=a
+endif
+
+" 必须先下载im-select.exe
+let g:im_select_command = "C:\\im-select\\im-select.exe"
+let g:im_select_default = "1033"
+
+
+" autorun
+if has('unix')
+    map <silent><F5> :call RunCode()<CR>
+endif
+
+" < 表示去掉文件的后缀
+func! RunCode()
+    exec "w"
+    if &filetype == 'c'
+        exec '!gcc -Werror % -o %<'
+        exec '!time ./%<'
+    elseif &filetype == 'c++'
+        exec '!g++ -Werror % -o %<'
+        exec '!time ./%<'
+    elseif &filetype == 'java'
+        exec '!javac %'
+        exec '!time java %:.:r'
+    elseif &filetype == 'python'
+        exec '!time python3 %'
+    elseif &filetype == 'go'
+        exec '!time go run %'
+    elseif &filetype == 'vim'
+        exec 'source ~/.config/nvim/init.vim'
+        exec 'PlugInstall'
+    elseif &filetype == 'rust'
+        exec '!cargo run'
+    endif
+endfunc
+
+nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
+
 "===============================================
+" nerdcommenter
 
 " Create default mappings
 let g:NERDCreateDefaultMappings = 1
