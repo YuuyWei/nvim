@@ -122,27 +122,28 @@ let g:which_key_map.v = {
 nnoremap <silent> <leader>vc :edit $MYVIMRC<CR>
 nnoremap <silent> <leader>vr :source $MYVIMRC<CR>
 
-let g:which_key_map.i = {
+let g:which_key_map.k = {
             \ 'name' : '+windows',
-            \ 'o': [  'lopen',     'open-locationlist' ],
-            \ 'q': [ 'copen',      'open-quickfix' ]    ,
-            \ 'w': ['<C-W>w',      'other-window']          ,
-            \ 'd': ['<C-W>c',      'delete-window']         ,
-            \ '-': ['<C-W>s',      'split-window-below']    ,
-            \ '|': ['<C-W>v',      'split-window-right']    ,
-            \ '2': ['<C-W>v',      'layout-double-columns'] ,
-            \ 'h': ['<C-W>h',      'window-left']           ,
-            \ 'j': ['<C-W>j',      'window-below']          ,
-            \ 'l': ['<C-W>l',      'window-right']          ,
-            \ 'k': ['<C-W>k',      'window-up']             ,
-            \ 'H': ['<C-W>5<',     'expand-window-left']    ,
-            \ 'J': [':resize +5',  'expand-window-below']   ,
-            \ 'L': ['<C-W>5>',     'expand-window-right']   ,
-            \ 'K': [':resize -5',  'expand-window-up']      ,
-            \ '=': ['<C-W>=',      'balance-window']        ,
-            \ 's': ['<C-W>s',      'split-window-below']    ,
-            \ 'v': ['<C-W>v',      'split-window-right']    ,
-            \ '?': ['Windows',     'fzf-window']            ,
+            \ 'q': ['copen',      'open-quickfix' ],
+            \ 'c': ['cclose',      'close-quickfix' ],
+            \ 'o': ['lopen',      'open-locationlist' ],
+            \ 'w': ['<C-W>w',     'other-window'],
+            \ 'd': ['<C-W>c',     'delete-window'],
+            \ '-': ['<C-W>s',     'split-window-below'],
+            \ '|': ['<C-W>v',     'split-window-right'],
+            \ '2': ['<C-W>v',     'layout-double-columns'],
+            \ 'h': ['<C-W>h',     'window-left'],
+            \ 'j': ['<C-W>j',     'window-below'],
+            \ 'l': ['<C-W>l',     'window-right'],
+            \ 'k': ['<C-W>k',     'window-up'],
+            \ 'H': ['<C-W>5<',    'expand-window-left'],
+            \ 'J': [':resize +5', 'expand-window-below'],
+            \ 'L': ['<C-W>5>',    'expand-window-right'],
+            \ 'K': [':resize -5', 'expand-window-up'],
+            \ '=': ['<C-W>=',     'balance-window'],
+            \ 's': ['<C-W>s',     'split-window-below'],
+            \ 'v': ['<C-W>v',     'split-window-right'],
+            \ '?': ['Windows',    'fzf-window'],
             \ }
 
 let g:which_key_map.b = {
@@ -284,6 +285,23 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not 
 let g:NERDToggleCheckAllLines = 1
+
+let g:which_key_map.c = {
+    \ 'name' : '+nerdcommenter',
+    \ ' ' : 'NERDCommenterToggle',
+    \ 'c' : 'NERDCommenterComment',
+    \ 'n' : 'NERDCommenterNested',
+    \ 'm' : 'NERDCommenterMinimal',
+    \ 'i' : 'NERDCommenterInvert',
+    \ 's' : 'NERDCommenterSexy',
+    \ 'y' : 'NERDCommenterYank',
+    \ '$' : 'NERDCommenterToEOL',
+    \ 'A' : 'NERDCommenterAppend',
+    \ 'u' : 'NERDCommenterUncomment',
+    \ 'a' : 'NERDCommenterAltDelims',
+    \ 'l' : 'NERDCommenterAlignLeft',
+    \ 'b' : 'NERDCommenterAlignBoth',
+    \ }
 
 "===============================================
 " FZF
@@ -644,7 +662,7 @@ let g:easy_align_delimiters = {
 "===============================================
 " async run
 "===============================================
-let g:asyncrun_open = 8
+let g:asyncrun_open = 6
 
 " cooperate with fugitive
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
