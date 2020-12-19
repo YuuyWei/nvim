@@ -76,7 +76,7 @@ Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " ==================================================
-" whick-key 
+" which-key 
 " ==================================================
 let g:mapleader = "\<Space>"
 
@@ -84,6 +84,7 @@ nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 " Define prefix dictionary
 let g:which_key_map =  {}
+call which_key#register('<Space>', "g:which_key_map")
 " Second level dictionaries:
 " 'name' is a special field. It will define the name of the group, e.g., leader-f is the "+file" group.
 " Unnamed groups will show a default empty string.
@@ -104,8 +105,10 @@ let g:which_key_map.f = {
             \ 'l':    ['Gpull',   'git-pull'],
             \ 'w':    ['Gwrite',  'git-write'],
             \ 'c':    ['Gcommit', 'git-commit'],
+            \ 'd':    'cd-current-directory',
+            \ 'p':    'git-save&push',
             \ }
-let g:which_key_map.f.p = 'git-save&push'
+nnoremap <silent> <leader>fd :cd %:p:h<CR>
 nnoremap <silent> <leader>fp :call VimConfigGitPush()<CR>
 func! VimConfigGitPush()
     exec "Gwrite"
@@ -118,9 +121,11 @@ let g:which_key_map.v = {
             \ 'name': '+vimrc',
             \ 'c':    'open-vimrc',
             \ 'r':    'reload-vimrc',
+            \ 's':    'source-vimscript',
             \}
 nnoremap <silent> <leader>vc :edit $MYVIMRC<CR>
 nnoremap <silent> <leader>vr :source $MYVIMRC<CR>
+nnoremap <silent> <leader>vs :source %<CR>
 
 let g:which_key_map.k = {
             \ 'name' : '+windows',
@@ -158,20 +163,7 @@ let g:which_key_map.b = {
             \ 'p' : ['bprevious',        'previous-buffer'] ,
             \ '?' : ['Buffers',          'fzf-buffer']      ,
             \ }
-call which_key#register('<Space>', "g:which_key_map")
 
-let g:lightline = {
-            \ 'colorscheme': 'one',
-            \ 'active': {
-            \   'left': [ [ 'mode', 'paste' ],
-            \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-            \ },
-            \ 'component_function': {
-            \   'gitbranch': 'FugitiveHead'
-            \ },
-            \ }
-
-set laststatus=2
 
 " =======================================================
 " basic setting
@@ -182,6 +174,8 @@ set fileencoding=utf-8
 set encoding=utf-8
 set termencoding=utf-8
 set pastetoggle=<f12>
+set spell 
+set spelllang=en_us,cjk
 set hidden
 set nobackup
 set nowritebackup
@@ -192,7 +186,6 @@ set nu
 filetype plugin on
 " 设置为双字宽显示，否则无法完整显示如:☆
 set ambiwidth=double
-set t_ut= " 防止vim背景颜色错误
 set showmatch " 高亮匹配括号
 set matchtime=1
 set report=0
@@ -437,6 +430,8 @@ nnoremap <silent><nowait> <leader>llj  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <leader>llk  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <leader>llr  :<C-u>CocListResume<CR>
+" Find snippets of current document.
+nnoremap <silent><nowait> <leader>llp  :<C-u>CocList snippets<cr>
 
 " coc snippets 
 " Use <C-l> for trigger snippet expand.
@@ -475,6 +470,7 @@ let g:which_key_map.l.l = {
             \ 'j':    'coc-list-next',
             \ 'k':    'coc-list-previous',
             \ 'r':    'coc-list-resume',
+            \ 'p':    'coc-list-snippets',
             \ }
 
 "===============================================
@@ -515,8 +511,25 @@ let g:vimwiki_ext2syntax = {
             \'.md': 'markdown',
             \'.mdown': 'markdown'}
 
+let g:vimwiki_filetypes = ['markdown', 'pandoc']
 
 let g:vimwiki_markdown_link_ext = 1
+
+" disable the insert mappings
+let g:vimwiki_key_mappings =
+    \ {
+    \   'all_maps': 1,
+    \   'global': 1,
+    \   'headers': 1,
+    \   'text_objs': 1,
+    \   'table_format': 1,
+    \   'table_mappings': 0,
+    \   'lists': 1,
+    \   'lists_return': 0,
+    \   'links': 1,
+    \   'html': 1,
+    \   'mouse': 0,
+    \ }
 
 "===============================================
 " markdown preview
@@ -666,3 +679,20 @@ let g:asyncrun_open = 6
 
 " cooperate with fugitive
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+
+
+"===============================================
+" lightline
+"===============================================
+let g:lightline = {
+            \ 'colorscheme': 'one',
+            \ 'active': {
+            \   'left': [ [ 'mode', 'paste' ],
+            \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+            \ },
+            \ 'component_function': {
+            \   'gitbranch': 'FugitiveHead'
+            \ },
+            \ }
+
+set laststatus=2
