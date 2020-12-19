@@ -675,7 +675,7 @@ let g:easy_align_delimiters = {
 "===============================================
 " async run
 "===============================================
-let g:asyncrun_open = 6
+let g:asyncrun_open = 0
 
 " cooperate with fugitive
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
