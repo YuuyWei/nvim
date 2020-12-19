@@ -4,7 +4,7 @@
     "additionalProperties": false,
     "snippets.extends": {
         "cpp": ["c"],
-        "vimwiki": ["markdown", "md"]
+        "vimwiki": ["markdown"]
     },
     "suggest.minTriggerInputLength": 2
 }
