@@ -38,6 +38,7 @@ Plug 'mbbill/undotree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'skywind3000/asyncrun.vim'
+Plug 'albertomontesg/lightline-asyncrun'
 
 " wiki
 " Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
@@ -694,5 +695,6 @@ let g:lightline = {
             \   'gitbranch': 'FugitiveHead'
             \ },
             \ }
-
-set laststatus=2
+let g:lightline.component_expand = {
+        \ 'asyncrun_status': 'lightline#asyncrun#status',
+        \ }
