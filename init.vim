@@ -759,11 +759,10 @@ let g:lightline = {
             \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
             \   'right': [ [ 'lineinfo' ],
             \              [ 'percent' ],
-            \              [ 'coc', 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
+            \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
             \ },
             \ 'component_function': {
             \   'gitbranch': 'FugitiveHead',
-            \   'coc': 'vista_nearest_method_or_function',
             \ },
             \ }
 
@@ -777,3 +776,4 @@ nnoremap <leader>u :UndotreeToggle<CR>
 " vista
 "===============================================
 let g:vista_default_executive = 'coc'
+nnoremap <silent> <leader>lt :Vista!!<CR>
