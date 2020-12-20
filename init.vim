@@ -25,6 +25,7 @@ Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'itchyny/lightline.vim'
 Plug 'mhinz/vim-startify'
+" Plug 'altercation/vim-colors-solarized'
 Plug 'rakr/vim-one'
 
 " vim easy editting
@@ -190,6 +191,14 @@ endif
 " basic setting
 " =======================================================
 " 使得复制粘贴不会自动注释，会莫名奇妙导致autoindent无效
+syntax enable
+if has('gui_running')
+    set background=light
+else
+    set background=dark
+endif
+colorscheme one
+
 set fileencodings=ucs-bom,utf-8,cp936
 set fileencoding=utf-8
 set encoding=utf-8
@@ -235,7 +244,6 @@ set smartcase
 if has('gui_running')
     set mouse=a
 endif
-colorscheme one
 
 " =======================================================
 " im-select
@@ -705,7 +713,6 @@ command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 " lightline
 "===============================================
 let g:lightline = {
-            \ 'colorscheme': 'one',
             \ 'active': {
             \   'left': [ [ 'mode', 'paste' ],
             \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
