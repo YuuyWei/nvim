@@ -175,19 +175,16 @@ let g:which_key_map.b = {
             \ }
 
 " open a term depending on OS
-" let g:which_key_map.t = {
-"             \ 'name': '+terminal',
-"             \ 'v': 'vertical-terminal',
-"             \ 's': 'horizonal-terminal',
-"             \ }
-"
-" if has('unix')
-"     nnoremap <silent> <leader>tv :exec "vsplit | term"<CR>
-"     nnoremap <silent> <leader>ts :exec "split | term"<CR>
-" else
-"     nnoremap <silent> <leader>tv :vsplit term://powershell<CR>
-"     nnoremap <silent> <leader>ts :split term://powershell<CR>
-" endif
+
+if has('win32')
+    let g:which_key_map.t = {
+                \ 'name': '+terminal',
+                \ 'v': 'vertical-terminal',
+                \ 's': 'horizonal-terminal',
+                \ }
+    nnoremap <silent> <leader>tv :vsplit term://powershell<CR>
+    nnoremap <silent> <leader>ts :split term://powershell<CR>
+endif
 
 " =======================================================
 " basic setting
