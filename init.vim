@@ -39,9 +39,10 @@ Plug 'tpope/vim-surround'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'brglng/vim-im-select'
 Plug 'mbbill/undotree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
+" Plug 'Xuyuanp/nerdtree-git-plugin'
+" Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'skywind3000/asyncrun.vim'
+Plug 'liuchengxu/vista.vim'
 " Plug 'albertomontesg/lightline-asyncrun'
 
 " wiki
@@ -101,13 +102,13 @@ call which_key#register('<Space>', "g:which_key_map")
 " =======================================================
 " nerdtree
 " =======================================================
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 let g:which_key_map.f = {
             \ 'name': '+find/file/git',
             \ 'f':    ['Files',   'fzf-files'],
             \ 's':    ['update',  'save-files'],
-            \ 't':    ['NERDTreeToggle',  'tree-files'],
+            \ 'e':    'explore-files',
             \ 'l':    ['Gpull',   'git-pull'],
             \ 'w':    ['Gwrite',  'git-write'],
             \ 'c':    ['Gcommit', 'git-commit'],
@@ -190,7 +191,7 @@ endif
 " =======================================================
 " basic setting
 " =======================================================
-" 使得复制粘贴不会自动注释，会莫名奇妙导致autoindent无效
+" 使得复制粘贴不会自动注释，会莫名奇妙导致auto indent无效
 syntax enable
 set background=dark
 colorscheme one
@@ -200,7 +201,7 @@ set fileencoding=utf-8
 set encoding=utf-8
 set termencoding=utf-8
 set pastetoggle=<f12>
-set spell 
+set spell
 set spelllang=en_us,cjk
 set hidden
 set nobackup
@@ -282,7 +283,7 @@ endfunc
 
 
 " =======================================================
-" nerdcommenter
+" nerd commenter
 " =======================================================
 
 " Create default mappings
@@ -348,7 +349,7 @@ function! s:check_back_space() abort
 endfunction
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
+" format on enter, <CR> could be remapped by other vim plug-in
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
@@ -457,6 +458,49 @@ nnoremap <silent><nowait> <leader>llk  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <leader>llr  :<C-u>CocListResume<CR>
 " Find snippets of current document.
 nnoremap <silent><nowait> <leader>llp  :<C-u>CocList snippets<cr>
+
+nnoremap <silent><nowait> <leader>fe :<C-u>CocCommand explorer<cr>
+
+" coc extensions
+let g:coc_global_extensions = [
+            \ 'coc-explorer',
+            \ 'coc-git',
+            \ 'coc-lists',
+            \ 'coc-todolist',
+            \ 'coc-vimlsp',
+            \ 'coc-json',
+            \ 'coc-snippets',
+            \  ]
+" let g:coc_global_extensions = [
+"             \ 'coc-bookmark',
+"             \ 'coc-cmake',
+"             \ 'coc-css',
+"             \ 'coc-emmet',
+"             \ 'coc-eslint',
+"             \ 'coc-explorer',
+"             \ 'coc-flutter',
+"             \ 'coc-git',
+"             \ 'coc-go',
+"             \ 'coc-html',
+"             \ 'coc-json',
+"             \ 'coc-julia',
+"             \ 'coc-kite',
+"             \ 'coc-lists',
+"             \ 'coc-marketplace',
+"             \ 'coc-pairs',
+"             \ 'coc-rls',
+"             \ 'coc-sql',
+"             \ 'coc-stylelint',
+"             \ 'coc-todolist',
+"             \ 'coc-toml',
+"             \ 'coc-translator',
+"             \ 'coc-tsserver',
+"             \ 'coc-vetur',
+"             \ 'coc-vimlsp',
+"             \ 'coc-webpack',
+"             \ 'coc-yaml',
+"             \ 'coc-yank'
+"             \  ]
 
 " coc snippets 
 " Use <C-l> for trigger snippet expand.
@@ -715,10 +759,11 @@ let g:lightline = {
             \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
             \   'right': [ [ 'lineinfo' ],
             \              [ 'percent' ],
-            \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
+            \              [ 'coc', 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
             \ },
             \ 'component_function': {
-            \   'gitbranch': 'FugitiveHead'
+            \   'gitbranch': 'FugitiveHead',
+            \   'coc': 'vista_nearest_method_or_function',
             \ },
             \ }
 
@@ -727,3 +772,8 @@ let g:lightline = {
 "===============================================
 let g:which_key_map.u = 'undotree-toggle'
 nnoremap <leader>u :UndotreeToggle<CR>
+
+"===============================================
+" vista
+"===============================================
+let g:vista_default_executive = 'coc'
