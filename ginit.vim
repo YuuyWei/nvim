@@ -3,8 +3,10 @@
 " ==================================================
 if exists('g:GuiLoaded')
     GuiPopupmenu 0
-    GuiFont! Consolas:h12
     call GuiWindowMaximized(1)
+    if has('win32')
+        GuiFont! sarasa mono sc:h12
+    endif
 endif
 
 " if has('win32')

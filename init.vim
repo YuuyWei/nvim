@@ -5,8 +5,11 @@ if empty(glob(stdpath('data') . '/plugged'))
     if has('unix')
         !sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     endif
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+            \| PlugInstall --sync | source $MYVIMRC
+            \| endif
 
 " ==================================================
 " vim-plug 
@@ -38,12 +41,13 @@ Plug 'mbbill/undotree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'skywind3000/asyncrun.vim'
-Plug 'albertomontesg/lightline-asyncrun'
+" Plug 'albertomontesg/lightline-asyncrun'
 
 " wiki
 " Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
-Plug 'iamcco/markdown-preview.nvim' , { 'do': { -> mkdp#util#install()  }, 'for': ['markdown', 'vim-plug', 'vimwiki'] }
-Plug 'vimwiki/vimwiki'
+Plug 'iamcco/markdown-preview.nvim' , { 'do': { -> mkdp#util#install()  }}
+" Plug 'vimwiki/vimwiki'
+Plug 'YuuyWei/vimwiki', {'branch': 'dev'}
 
 " Any valid git URL is allowed
 " Plug 'https://github.com/junegunn/vim-github-dashboard.git'
@@ -99,13 +103,14 @@ call which_key#register('<Space>', "g:which_key_map")
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 let g:which_key_map.f = {
-            \ 'name': '+file/git',
+            \ 'name': '+find/file/git',
             \ 'f':    ['Files',   'fzf-files'],
             \ 's':    ['update',  'save-files'],
             \ 't':    ['NERDTreeToggle',  'tree-files'],
             \ 'l':    ['Gpull',   'git-pull'],
             \ 'w':    ['Gwrite',  'git-write'],
             \ 'c':    ['Gcommit', 'git-commit'],
+            \ 'g':    ['Rg', 'grep-file'],
             \ 'd':    'cd-current-directory',
             \ 'p':    'git-save&push',
             \ }
@@ -116,6 +121,10 @@ func! VimConfigGitPush()
     exec "Gcommit -m 'information update'"
     exec "Gpush -u origin main"
 endfunc
+if has('linux')
+    nnoremap <silent> <leader>fu :w !sudo tee %<CR>
+    let g:which_key_map.f.u = 'sudo-save'
+endif
 
 
 let g:which_key_map.v = {
@@ -165,11 +174,28 @@ let g:which_key_map.b = {
             \ '?' : ['Buffers',          'fzf-buffer']      ,
             \ }
 
+" open a term depending on OS
+let g:which_key_map.t = {
+            \ 'name': '+terminal',
+            \ 'v': 'vertical-terminal',
+            \ 's': 'horizonal-terminal',
+            \ }
+
+if has('win32')
+    nnoremap <silent> <leader>tv :vsplit term://powershell<CR>
+    nnoremap <silent> <leader>ts :split term://powershell<CR>
+else
+    nnoremap <silent> <leader>tv :vsplit | term<CR>
+    nnoremap <silent> <leader>ts :split | term<CR>
+endif
+
 
 " =======================================================
 " basic setting
 " =======================================================
 " 使得复制粘贴不会自动注释，会莫名奇妙导致autoindent无效
+colorscheme one
+filetype plugin on
 set fileencodings=ucs-bom,utf-8,cp936
 set fileencoding=utf-8
 set encoding=utf-8
@@ -184,7 +210,6 @@ set updatetime=300
 set timeoutlen=500
 set shortmess+=c
 set nu
-filetype plugin on
 " 设置为双字宽显示，否则无法完整显示如:☆
 set ambiwidth=double
 set showmatch " 高亮匹配括号
@@ -205,7 +230,6 @@ set autoread
 set clipboard+=unnamed
 set nocompatible
 set foldmethod=marker
-colorscheme one
 set termguicolors
 set wildmenu
 set wildmode=full
@@ -500,7 +524,7 @@ let g:which_key_map.w[' '] = {
             \ }
 
 let g:vimwiki_list = [{
-            \'path': '~/vimwiki/',
+            \ 'path': '~/vimwiki/',
             \ 'links_space_char': '_',
             \ 'syntax': 'markdown',
             \'ext': '.md'}]
@@ -681,7 +705,6 @@ let g:asyncrun_open = 0
 " cooperate with fugitive
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
-
 "===============================================
 " lightline
 "===============================================
@@ -689,12 +712,18 @@ let g:lightline = {
             \ 'colorscheme': 'one',
             \ 'active': {
             \   'left': [ [ 'mode', 'paste' ],
-            \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+            \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+            \   'right': [ [ 'lineinfo' ],
+            \              [ 'percent' ],
+            \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
             \ },
             \ 'component_function': {
             \   'gitbranch': 'FugitiveHead'
             \ },
             \ }
-let g:lightline.component_expand = {
-        \ 'asyncrun_status': 'lightline#asyncrun#status',
-        \ }
+
+"===============================================
+" undotree
+"===============================================
+let g:which_key_map.u = 'undotree-toggle'
+nnoremap <leader>u :UndotreeToggle<CR>
