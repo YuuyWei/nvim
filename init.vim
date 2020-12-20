@@ -1,15 +1,15 @@
 " ==================================================
 " if existing no vim-plug, then install
 " ==================================================
-if empty(glob(stdpath('data') . '/plugged'))
-    if has('unix')
+if has('unix')
+    if empty(glob(stdpath('data') . '/plugged'))
         !sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     endif
+    " Run PlugInstall if there are missing plugins
+    autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+                \| PlugInstall --sync | source $MYVIMRC
+                \| endif
 endif
-" Run PlugInstall if there are missing plugins
-autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-            \| PlugInstall --sync | source $MYVIMRC
-            \| endif
 
 " ==================================================
 " vim-plug 
@@ -175,26 +175,24 @@ let g:which_key_map.b = {
             \ }
 
 " open a term depending on OS
-let g:which_key_map.t = {
-            \ 'name': '+terminal',
-            \ 'v': 'vertical-terminal',
-            \ 's': 'horizonal-terminal',
-            \ }
-
-if has('win32')
-    nnoremap <silent> <leader>tv :vsplit term://powershell<CR>
-    nnoremap <silent> <leader>ts :split term://powershell<CR>
-else
-    nnoremap <silent> <leader>tv :vsplit | term<CR>
-    nnoremap <silent> <leader>ts :split | term<CR>
-endif
-
+" let g:which_key_map.t = {
+"             \ 'name': '+terminal',
+"             \ 'v': 'vertical-terminal',
+"             \ 's': 'horizonal-terminal',
+"             \ }
+"
+" if has('unix')
+"     nnoremap <silent> <leader>tv :exec "vsplit | term"<CR>
+"     nnoremap <silent> <leader>ts :exec "split | term"<CR>
+" else
+"     nnoremap <silent> <leader>tv :vsplit term://powershell<CR>
+"     nnoremap <silent> <leader>ts :split term://powershell<CR>
+" endif
 
 " =======================================================
 " basic setting
 " =======================================================
 " 使得复制粘贴不会自动注释，会莫名奇妙导致autoindent无效
-colorscheme one
 set fileencodings=ucs-bom,utf-8,cp936
 set fileencoding=utf-8
 set encoding=utf-8
@@ -209,6 +207,7 @@ set updatetime=300
 set timeoutlen=500
 set shortmess+=c
 set nu
+filetype plugin on
 " 设置为双字宽显示，否则无法完整显示如:☆
 set ambiwidth=double
 set showmatch " 高亮匹配括号
@@ -239,7 +238,7 @@ set smartcase
 if has('gui_running')
     set mouse=a
 endif
-filetype plugin on
+colorscheme one
 
 " =======================================================
 " im-select
