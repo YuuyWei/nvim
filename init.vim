@@ -195,7 +195,6 @@ endif
 " =======================================================
 " 使得复制粘贴不会自动注释，会莫名奇妙导致autoindent无效
 colorscheme one
-filetype plugin on
 set fileencodings=ucs-bom,utf-8,cp936
 set fileencoding=utf-8
 set encoding=utf-8
@@ -240,6 +239,7 @@ set smartcase
 if has('gui_running')
     set mouse=a
 endif
+filetype plugin on
 
 " =======================================================
 " im-select
