@@ -192,11 +192,7 @@ endif
 " =======================================================
 " 使得复制粘贴不会自动注释，会莫名奇妙导致autoindent无效
 syntax enable
-if has('gui_running')
-    set background=light
-else
-    set background=dark
-endif
+set background=dark
 colorscheme one
 
 set fileencodings=ucs-bom,utf-8,cp936
