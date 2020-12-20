@@ -709,6 +709,7 @@ command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 " lightline
 "===============================================
 let g:lightline = {
+            \ 'colorscheme': 'one',
             \ 'active': {
             \   'left': [ [ 'mode', 'paste' ],
             \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
