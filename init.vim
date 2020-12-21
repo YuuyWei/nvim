@@ -1,22 +1,27 @@
-" ==================================================
+" ==============================================================================
 " if existing no vim-plug, then install {{{
-" ==================================================
+" ==============================================================================
 if has('unix')
     if empty(glob(stdpath('data') . '/plugged'))
-        !sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+        !sh -c 'curl -fLo
+        "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim
+                    \ --create-dirs
+                    \ https://raw.githubusercontent.com
+                    \ /junegunn/vim-plug/master/plug.vim'
     endif
     " Run PlugInstall if there are missing plugins
     augroup auto_install_plug
         autocmd!
-        autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+        autocmd VimEnter * if len(filter(values(g:plugs),
+                    \ '!isdirectory(v:val.dir)'))
                     \| PlugInstall --sync | source $MYVIMRC
                     \| endif
     augroup end
 endif
-" }}}===============================================
-" ==================================================
+" }}}===========================================================================
+" ==============================================================================
 " vim-plug  {{{
-" ==================================================
+" ==============================================================================
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin(stdpath('data') . '/plugged')
@@ -30,7 +35,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'mhinz/vim-startify'
 " Plug 'altercation/vim-colors-solarized'
 Plug 'rakr/vim-one'
-
 " vim easy editting
 Plug 'junegunn/vim-easy-align'
 Plug 'liuchengxu/vista.vim'
@@ -45,6 +49,7 @@ Plug 'mbbill/undotree'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'skywind3000/asyncrun.vim'
+Plug 'skywind3000/vim-terminal-help'
 Plug 'liuchengxu/vista.vim'
 " Plug 'albertomontesg/lightline-asyncrun'
 
@@ -84,10 +89,10 @@ Plug 'junegunn/fzf.vim'
 
 " Initialize plugin system 
 call plug#end()
-" }}}===============================================
-" ==================================================
+" }}}===========================================================================
+" ==============================================================================
 " which-key {{{ 
-" ==================================================
+" ==============================================================================
 let g:mapleader = "\<Space>"
 
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
@@ -96,12 +101,12 @@ vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 let g:which_key_map =  {}
 call which_key#register('<Space>', "g:which_key_map")
 " Second level dictionaries:
-" 'name' is a special field. It will define the name of the group, e.g., leader-f is the "+file" group.
+" 'name' is a special field. It will define the name of the group, e.g.,
+" leader-f is the "+file" group.
+"
 " Unnamed groups will show a default empty string.
-
 " Create menus based on existing mappings
 " You can pass a descriptive text to an existing mapping.
-
 
 let g:which_key_map.f = {
             \ 'name': '+find/file/git',
@@ -132,6 +137,7 @@ let g:which_key_map.v = {
             \ 'c':    [ ':edit $MYVIMRC', 'open-vimrc' ],
             \ 'r':    [ ':source $MYVIMRC', 'reload-vimrc' ],
             \ 's':    [ ':source $MYVIMRC', 'source-vimscript' ],
+            \ 'i':    [ ':PlugInstall', 'source-vimscript' ],
             \}
 
 let g:which_key_map.k = {
@@ -171,28 +177,14 @@ let g:which_key_map.b = {
             \ '?' : ['Buffers',          'fzf-buffer']      ,
             \ }
 
-" open a term depending on OS
-
-let g:which_key_map.t = {
-            \ 'name': '+terminal',
-            \ 'v': 'vertical-terminal',
-            \ 's': 'horizonal-terminal',
-            \ }
-if has('win32')
-    nnoremap <silent> <leader>tv :vsplit term://powershell<CR>
-    nnoremap <silent> <leader>ts :split term://powershell<CR>
-else
-    nnoremap <silent> <leader>tv :vsplit <Bar> term<CR>
-    nnoremap <silent> <leader>ts :split <Bar> term<CR>
-endif
-" }}}====================================================
-" =======================================================
+" }}}===========================================================================
+" ==============================================================================
 " basic setting {{{
-" =======================================================
+" ==============================================================================
 " 使得复制粘贴不会自动注释，会莫名奇妙导致auto indent无效
 syntax enable
 colorscheme one
-
+set textwidth=80
 set fileencodings=ucs-bom,utf-8,cp936
 set fileencoding=utf-8
 set encoding=utf-8
@@ -227,7 +219,6 @@ set nobackup
 set autoread
 set clipboard+=unnamed
 set nocompatible
-set foldmethod=marker
 set termguicolors
 set wildmenu
 set wildmode=full
@@ -239,17 +230,21 @@ set nomore
 if has('gui_running')
     set mouse=a
 endif
-" }}} ===================================================
-" =======================================================
+augroup vim_fold
+    autocmd!
+    autocmd FileType vim set foldmethod=marker
+augroup END
+" }}} ==========================================================================
+" ==============================================================================
 " im-select {{{
-" =======================================================
+" ==============================================================================
 " 必须先下载im-select.exe
 let g:im_select_command = "C:\\im-select\\im-select.exe"
 let g:im_select_default = "1033"
-" }}}====================================================
-" =======================================================
+" }}}===========================================================================
+" ==============================================================================
 " autorun{{{
-" =======================================================
+" ==============================================================================
 if has('unix')
     map <silent><F5> :call RunCode()<CR>
 endif
@@ -278,10 +273,10 @@ func! RunCode()
     endif
 endfunc
 
-" }}}====================================================
-" =======================================================
+" }}}===========================================================================
+" ==============================================================================
 " nerd commenter{{{
-" =======================================================
+" ==============================================================================
 
 " Create default mappings
 let g:NERDCreateDefaultMappings = 1
@@ -289,7 +284,8 @@ let g:NERDCreateDefaultMappings = 1
 let g:NERDSpaceDelims = 1
 " Use compact syntax for prettified multi-line comments
 let g:NERDCompactSexyComs = 1
-" Align line-wise comment delimiters flush left instead of following code indentation
+" Align line-wise comment delimiters flush left instead of following code
+" indentation
 let g:NERDDefaultAlign = 'left'
 " Set a language to use its alternate delimiters by default
 let g:NERDAltDelims_java = 1
@@ -303,26 +299,26 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
 let g:which_key_map.c = {
-    \ 'name' : '+nerdcommenter',
-    \ ' ' : 'NERDCommenterToggle',
-    \ 'c' : 'NERDCommenterComment',
-    \ 'n' : 'NERDCommenterNested',
-    \ 'm' : 'NERDCommenterMinimal',
-    \ 'i' : 'NERDCommenterInvert',
-    \ 's' : 'NERDCommenterSexy',
-    \ 'y' : 'NERDCommenterYank',
-    \ '$' : 'NERDCommenterToEOL',
-    \ 'A' : 'NERDCommenterAppend',
-    \ 'u' : 'NERDCommenterUncomment',
-    \ 'a' : 'NERDCommenterAltDelims',
-    \ 'l' : 'NERDCommenterAlignLeft',
-    \ 'b' : 'NERDCommenterAlignBoth',
-    \ }
+            \ 'name' : '+nerdcommenter',
+            \ ' ' : 'NERDCommenterToggle',
+            \ 'c' : 'NERDCommenterComment',
+            \ 'n' : 'NERDCommenterNested',
+            \ 'm' : 'NERDCommenterMinimal',
+            \ 'i' : 'NERDCommenterInvert',
+            \ 's' : 'NERDCommenterSexy',
+            \ 'y' : 'NERDCommenterYank',
+            \ '$' : 'NERDCommenterToEOL',
+            \ 'A' : 'NERDCommenterAppend',
+            \ 'u' : 'NERDCommenterUncomment',
+            \ 'a' : 'NERDCommenterAltDelims',
+            \ 'l' : 'NERDCommenterAlignLeft',
+            \ 'b' : 'NERDCommenterAlignBoth',
+            \ }
 
-" }}}====================================================
-"===============================================
+" }}}===========================================================================
+"===============================================================================
 " FZF{{{
-"===============================================
+"===============================================================================
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-l> <plug>(fzf-complete-line)
@@ -340,40 +336,42 @@ endif
 " - yoffset [float default 0.5 range [0 ~ 1]]
 " - highlight [string default 'Comment']: Highlight group for border
 " - border [string default 'rounded']: Border style
-"   - 'rounded' / 'sharp' / 'horizontal' / 'vertical' / 'top' / 'bottom' / 'left' / 'right'
+"   - 'rounded' / 'sharp' / 'horizontal' / 'vertical' / 'top' / 'bottom' /
+"   'left' / 'right'
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 
 " nmap <leader><tab> <plug>(fzf-maps-n)
 " xmap <leader><tab> <plug>(fzf-maps-x)
 " omap <leader><tab> <plug>(fzf-maps-o)
 
-" }}}====================================================
-"===============================================
+" }}}===========================================================================
+"===============================================================================
 " coc{{{
-"===============================================
+"===============================================================================
 "
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 
 inoremap <silent><expr> <TAB>
-			\ pumvisible() ? "\<C-n>" :
-			\ <SID>check_back_space() ? "\<TAB>" :
-			\ coc#refresh()
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1]  =~# '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <CR> could be remapped by other vim plug-in
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location
+" list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
@@ -434,12 +432,18 @@ omap ac <Plug>(coc-classobj-a)
 
 " Remap <C-f> and <C-b> for scroll float windows/popups.
 if has('nvim-0.4.0') || has('patch-8.2.0750')
-    nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-    nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-    inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-    inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-    vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-    vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+    nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() 
+                \ ? coc#float#scroll(1) : "\<C-f>"
+    nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() 
+                \ ? coc#float#scroll(0) : "\<C-b>"
+    inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() 
+                \ ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+    inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() 
+                \ ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+    vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() 
+                \ ? coc#float#scroll(1) : "\<C-f>"
+    vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() 
+                \ ? coc#float#scroll(0) : "\<C-b>"
 endif
 
 " Use CTRL-S for selections ranges.
@@ -451,10 +455,11 @@ xmap <silent> <C-s> <Plug>(coc-range-select)
 command! -nargs=0 Format :call CocAction('format')
 
 " Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
 
 " Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+command! -nargs=0 OR :call CocAction('runCommand', 
+            \ 'editor.action.organizeImport')
 
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
@@ -563,10 +568,10 @@ let g:which_key_map.l.l = {
             \ 'p':    'coc-list-snippets',
             \ }
 
-" }}}====================================================
-"===============================================
+" }}}===========================================================================
+"===============================================================================
 " vim-wiki{{{
-"===============================================
+"===============================================================================
 let g:which_key_map.w = {
             \ 'name': '+wiki',
             \ 'i':    'wiki-diary-index',
@@ -578,6 +583,12 @@ let g:which_key_map.w = {
             \ 'hh':    'wiki-2HTML&browse',
             \ 'n':    'wiki-goto',
             \ 'r':    'wiki-rename-file',
+            \ }
+
+let g:which_key_map.w.g = {
+            \ 'name': '+wiki-generate',
+            \ 'l': [':VimwikiGenerateLinks',  'wiki-generate-links'],
+            \ 't': [':VimwikiGenerateTagLinks',  'wiki-generate-tag-links'],
             \ }
 
 let g:which_key_map.w[' '] = {
@@ -592,8 +603,9 @@ let g:which_key_map.w[' '] = {
 let g:vimwiki_list = [{
             \ 'path': '~/vimwiki/',
             \ 'links_space_char': '_',
+            \ 'auto_tags': 1,
             \ 'syntax': 'markdown',
-            \'ext': '.md'}]
+            \ 'ext': '.md'}]
 
 let g:vimwiki_ext2syntax = {
             \'.rmd': 'markdown',
@@ -608,24 +620,24 @@ let g:vimwiki_markdown_link_ext = 1
 
 " disable the insert mappings
 let g:vimwiki_key_mappings =
-    \ {
-    \   'all_maps': 1,
-    \   'global': 1,
-    \   'headers': 1,
-    \   'text_objs': 1,
-    \   'table_format': 1,
-    \   'table_mappings': 0,
-    \   'lists': 1,
-    \   'lists_return': 1,
-    \   'links': 1,
-    \   'html': 1,
-    \   'mouse': 0,
-    \ }
+            \ {
+            \   'all_maps': 1,
+            \   'global': 1,
+            \   'headers': 1,
+            \   'text_objs': 1,
+            \   'table_format': 1,
+            \   'table_mappings': 0,
+            \   'lists': 1,
+            \   'lists_return': 1,
+            \   'links': 1,
+            \   'html': 1,
+            \   'mouse': 0,
+            \ }
 
-" }}}====================================================
-"===============================================
+" }}}===========================================================================
+"===============================================================================
 " markdown preview{{{
-"===============================================
+"===============================================================================
 " set to 1, nvim will open the preview window after entering the markdown buffer
 " default: 0
 let g:mkdp_auto_start = 0
@@ -677,26 +689,28 @@ let g:mkdp_browserfunc = ''
 " maid: mermaid options
 " disable_sync_scroll: if disable sync scroll, default 0
 " sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
-"   middle: mean the cursor position alway show at the middle of the preview page
-"   top: mean the vim top viewport alway show at the top of the preview page
-"   relative: mean the cursor position alway show at the relative positon of the preview page
+"   middle: mean the cursor position alway show at the middle of the preview
+"   page top: mean the vim top viewport alway show at the top of the preview
+"   page relative: mean the cursor position alway show at the relative positon
+"   of the preview page
 " hide_yaml_meta: if hide yaml metadata, default is 1
 " sequence_diagrams: js-sequence-diagrams options
-" content_editable: if enable content editable for preview page, default: v:false
+" content_editable: if enable content editable for preview page, default:
+" v:false
 " disable_filename: if disable filename header for preview page, default: 0
 let g:mkdp_preview_options = {
-    \ 'mkit': {},
-    \ 'katex': {},
-    \ 'uml': {},
-    \ 'maid': {},
-    \ 'disable_sync_scroll': 0,
-    \ 'sync_scroll_type': 'middle',
-    \ 'hide_yaml_meta': 1,
-    \ 'sequence_diagrams': {},
-    \ 'flowchart_diagrams': {},
-    \ 'content_editable': v:false,
-    \ 'disable_filename': 0
-    \ }
+            \ 'mkit': {},
+            \ 'katex': {},
+            \ 'uml': {},
+            \ 'maid': {},
+            \ 'disable_sync_scroll': 0,
+            \ 'sync_scroll_type': 'middle',
+            \ 'hide_yaml_meta': 1,
+            \ 'sequence_diagrams': {},
+            \ 'flowchart_diagrams': {},
+            \ 'content_editable': v:false,
+            \ 'disable_filename': 0
+            \ }
 
 " use a custom markdown style must be absolute path
 " like '/Users/username/markdown.css' or expand('~/markdown.css')
@@ -720,13 +734,17 @@ let g:mkdp_filetypes = ['markdown', 'vimwiki']
 " keymapping
 " nmap <leader>mp <Plug>MarkdownPreview
 " nmap <leader>ms <Plug>MarkdownPreviewStop
-nmap <leader>m <Plug>MarkdownPreviewToggle
-let g:which_key_map.m = 'markdown-preview-toggle'
+let g:which_key_map.m = {
+            \ 'name': '+markdown',
+            \ 't': ['<Plug>MarkdownPreviewToggle', 'markdown-preview-toggle'],
+            \ 'p': ['<Plug>MarkdownPreview', 'markdown-preview'],
+            \ 's': ['<Plug>MarkdownPreviewStop', 'markdown-preview-stop'],
+            \}
 
-" }}}====================================================
-"===============================================
+" }}}===========================================================================
+"===============================================================================
 " easy align{{{
-"===============================================
+"===============================================================================
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
@@ -743,41 +761,42 @@ nnoremap <Leader>: :set opfunc=<SID>easy_align_1st_colon<Enter>g@']]'
 let g:which_key_map[':'] = 'easy-align-1st-colon'
 
 let g:easy_align_delimiters = {
-\ '>': { 'pattern': '>>\|=>\|>' },
-\ '/': { 'pattern': '//\+\|/\*\|\*/', 'ignore_groups': ['String'] },
-\ '#': { 'pattern': '#\+', 'ignore_groups': ['String'], 'delimiter_align': 'l' },
-\ ']': {
-\     'pattern':       '[[\]]',
-\     'left_margin':   0,
-\     'right_margin':  0,
-\     'stick_to_left': 0
-\   },
-\ ')': {
-\     'pattern':       '[()]',
-\     'left_margin':   0,
-\     'right_margin':  0,
-\     'stick_to_left': 0
-\   },
-\ 'd': {
-\     'pattern': ' \(\S\+\s*[;=]\)\@=',
-\     'left_margin': 0,
-\     'right_margin': 0
-\   }
-\ }
+            \ '>': { 'pattern': '>>\|=>\|>' },
+            \ '/': { 'pattern': '//\+\|/\*\|\*/', 'ignore_groups': ['String'] },
+            \ '#': { 'pattern': '#\+', 'ignore_groups': ['String'], 
+            \        'delimiter_align': 'l' },
+            \ ']': {
+            \     'pattern':       '[[\]]',
+            \     'left_margin':   0,
+            \     'right_margin':  0,
+            \     'stick_to_left': 0
+            \   },
+            \ ')': {
+            \     'pattern':       '[()]',
+            \     'left_margin':   0,
+            \     'right_margin':  0,
+            \     'stick_to_left': 0
+            \   },
+            \ 'd': {
+            \     'pattern': ' \(\S\+\s*[;=]\)\@=',
+            \     'left_margin': 0,
+            \     'right_margin': 0
+            \   }
+            \ }
 
-" }}}====================================================
-"===============================================
+" }}}===========================================================================
+"===============================================================================
 " async run{{{
-"===============================================
+"===============================================================================
 let g:asyncrun_open = 0
 
 " cooperate with fugitive
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
-" }}}====================================================
-"===============================================
+" }}}===========================================================================
+"===============================================================================
 " lightline{{{
-"===============================================
+"===============================================================================
 let g:lightline = {
             \ 'colorscheme': 'one',
             \ 'active': {
@@ -785,32 +804,42 @@ let g:lightline = {
             \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
             \   'right': [ [ 'lineinfo' ],
             \              [ 'percent' ],
-            \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
+            \              [ 'fileformat', 'fileencoding', 
+            \                'filetype', 'charvaluehex' ] ]
             \ },
             \ 'component_function': {
             \   'gitbranch': 'FugitiveHead',
             \ },
             \ }
 
-" }}}====================================================
-"===============================================
+" }}}===========================================================================
+"===============================================================================
 " undotree{{{
-"===============================================
+"===============================================================================
 let g:which_key_map.u = [':UndotreeToggle', 'undotree-toggle']
 
-" }}}====================================================
-"===============================================
+" }}}===========================================================================
+"===============================================================================
 " vista{{{
-"===============================================
+"===============================================================================
 let g:vista_default_executive = 'coc'
 let g:which_key_map.l.t = [':Vista!!', 'coc-visual-tags']
 
-" }}}====================================================
-" =======================================================
+" }}}===========================================================================
+" ==============================================================================
 " nerdtree{{{
-" =======================================================
+" ==============================================================================
 " augroup exit_if_no_other_window
 "     autocmd!
-"     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")
+"                 \ && b:NERDTree.isTabTree()) | q | endif
 " augroup END
-" }}}====================================================
+" }}}===========================================================================
+"===============================================================================
+" terminal help ==={{{
+"===============================================================================
+if has('win32')
+    let g:terminal_shell = 'powershell.exe'
+endif
+" let g:terminal_cwd=0 "initialize working dir: '0' for unchanged, '1' for file
+" }}}===========================================================================
