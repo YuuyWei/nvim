@@ -323,10 +323,6 @@ imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 
-" Empty value to disable preview window altogether
-if has('win32')
-    let g:fzf_preview_window = ['right:50%:hidden', 'ctrl-/']
-endif
 " Required:
 " - width [float range [0 ~ 1]] or [integer range [8 ~ ]]
 " - height [float range [0 ~ 1]] or [integer range [4 ~ ]]
@@ -338,7 +334,14 @@ endif
 " - border [string default 'rounded']: Border style
 "   - 'rounded' / 'sharp' / 'horizontal' / 'vertical' / 'top' / 'bottom' /
 "   'left' / 'right'
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+if has('win32')
+    let g:fzf_layout = { 'down': '~40%' }
+else
+    let g:fzf_layout = {
+                \ 'window': { 'width': 0.9, 'height': 0.6,
+                \             'border': 'sharp'}
+                \ }
+endif
 
 " nmap <leader><tab> <plug>(fzf-maps-n)
 " xmap <leader><tab> <plug>(fzf-maps-x)
