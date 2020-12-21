@@ -113,10 +113,10 @@ let g:which_key_map.f = {
             \ 'w':    ['Gwrite',  'git-write'],
             \ 'c':    ['Gcommit', 'git-commit'],
             \ 'g':    ['Rg', 'grep-file'],
-            \ 'd':    'cd-current-directory',
+            \ 'd':   [':cd %:p:h', 'cd-current-directory'],
             \ 'p':    'git-save&push',
             \ }
-nnoremap <silent> <leader>fd :cd %:p:h<CR>
+
 nnoremap <silent> <leader>fp :call VimConfigGitPush()<CR>
 func! VimConfigGitPush()
     exec "Gwrite"
@@ -124,20 +124,16 @@ func! VimConfigGitPush()
     exec "Gpush -u origin main"
 endfunc
 if has('linux')
-    nnoremap <silent> <leader>fu :w !sudo tee %<CR>
-    let g:which_key_map.f.u = 'sudo-save'
+    let g:which_key_map.f.u = [ ':write !sudo tee %', 'sudo-save' ]
 endif
 
 
 let g:which_key_map.v = {
             \ 'name': '+vimrc',
-            \ 'c':    'open-vimrc',
-            \ 'r':    'reload-vimrc',
-            \ 's':    'source-vimscript',
+            \ 'c':    [ ':edit $MYVIMRC', 'open-vimrc' ],
+            \ 'r':    [ ':source $MYVIMRC', 'reload-vimrc' ],
+            \ 's':    [ ':source $MYVIMRC', 'source-vimscript' ],
             \}
-nnoremap <silent> <leader>vc :edit $MYVIMRC<CR>
-nnoremap <silent> <leader>vr :source $MYVIMRC<CR>
-nnoremap <silent> <leader>vs :source %<CR>
 
 let g:which_key_map.k = {
             \ 'name' : '+windows',
@@ -178,14 +174,17 @@ let g:which_key_map.b = {
 
 " open a term depending on OS
 
+let g:which_key_map.t = {
+            \ 'name': '+terminal',
+            \ 'v': 'vertical-terminal',
+            \ 's': 'horizonal-terminal',
+            \ }
 if has('win32')
-    let g:which_key_map.t = {
-                \ 'name': '+terminal',
-                \ 'v': 'vertical-terminal',
-                \ 's': 'horizonal-terminal',
-                \ }
     nnoremap <silent> <leader>tv :vsplit term://powershell<CR>
     nnoremap <silent> <leader>ts :split term://powershell<CR>
+else
+    nnoremap <silent> <leader>tv :vsplit <Bar> term<CR>
+    nnoremap <silent> <leader>ts :split <Bar> term<CR>
 endif
 
 " =======================================================
@@ -193,7 +192,6 @@ endif
 " =======================================================
 " 使得复制粘贴不会自动注释，会莫名奇妙导致auto indent无效
 syntax enable
-set background=dark
 colorscheme one
 
 set fileencodings=ucs-bom,utf-8,cp936
@@ -238,6 +236,7 @@ set hlsearch
 set ignorecase
 set incsearch
 set smartcase
+set nomore
 if has('gui_running')
     set mouse=a
 endif
@@ -328,6 +327,26 @@ let g:which_key_map.c = {
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Empty value to disable preview window altogether
+if has('win32')
+    let g:fzf_preview_window = ['right:50%:hidden', 'ctrl-/']
+endif
+" Required:
+" - width [float range [0 ~ 1]] or [integer range [8 ~ ]]
+" - height [float range [0 ~ 1]] or [integer range [4 ~ ]]
+"
+" Optional:
+" - xoffset [float default 0.5 range [0 ~ 1]]
+" - yoffset [float default 0.5 range [0 ~ 1]]
+" - highlight [string default 'Comment']: Highlight group for border
+" - border [string default 'rounded']: Border style
+"   - 'rounded' / 'sharp' / 'horizontal' / 'vertical' / 'top' / 'bottom' / 'left' / 'right'
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+
+" nmap <leader><tab> <plug>(fzf-maps-n)
+" xmap <leader><tab> <plug>(fzf-maps-x)
+" omap <leader><tab> <plug>(fzf-maps-o)
 
 "===============================================
 " coc
@@ -464,9 +483,7 @@ nnoremap <silent><nowait> <leader>fe :<C-u>CocCommand explorer<cr>
 " coc extensions
 let g:coc_global_extensions = [
             \ 'coc-explorer',
-            \ 'coc-git',
             \ 'coc-lists',
-            \ 'coc-todolist',
             \ 'coc-vimlsp',
             \ 'coc-json',
             \ 'coc-snippets',
@@ -594,7 +611,7 @@ let g:vimwiki_key_mappings =
     \   'table_format': 1,
     \   'table_mappings': 0,
     \   'lists': 1,
-    \   'lists_return': 0,
+    \   'lists_return': 1,
     \   'links': 1,
     \   'html': 1,
     \   'mouse': 0,
@@ -769,11 +786,10 @@ let g:lightline = {
 "===============================================
 " undotree
 "===============================================
-let g:which_key_map.u = 'undotree-toggle'
-nnoremap <leader>u :UndotreeToggle<CR>
+let g:which_key_map.u = [':UndotreeToggle', 'undotree-toggle']
 
 "===============================================
 " vista
 "===============================================
 let g:vista_default_executive = 'coc'
-nnoremap <silent> <leader>lt :Vista!!<CR>
+let g:which_key_map.l.t = [':Vista!!', 'coc-visual-tags']
