@@ -1,5 +1,5 @@
 " ==================================================
-" if existing no vim-plug, then install
+" if existing no vim-plug, then install {{{
 " ==================================================
 if has('unix')
     if empty(glob(stdpath('data') . '/plugged'))
@@ -13,9 +13,9 @@ if has('unix')
                     \| endif
     augroup end
 endif
-
+" }}}===============================================
 " ==================================================
-" vim-plug 
+" vim-plug  {{{
 " ==================================================
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
@@ -84,9 +84,9 @@ Plug 'junegunn/fzf.vim'
 
 " Initialize plugin system 
 call plug#end()
-
+" }}}===============================================
 " ==================================================
-" which-key 
+" which-key {{{ 
 " ==================================================
 let g:mapleader = "\<Space>"
 
@@ -102,13 +102,6 @@ call which_key#register('<Space>', "g:which_key_map")
 " Create menus based on existing mappings
 " You can pass a descriptive text to an existing mapping.
 
-" =======================================================
-" nerdtree
-" =======================================================
-" augroup exit_if_no_other_window
-"     autocmd!
-"     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" augroup END
 
 let g:which_key_map.f = {
             \ 'name': '+find/file/git',
@@ -192,9 +185,9 @@ else
     nnoremap <silent> <leader>tv :vsplit <Bar> term<CR>
     nnoremap <silent> <leader>ts :split <Bar> term<CR>
 endif
-
+" }}}====================================================
 " =======================================================
-" basic setting
+" basic setting {{{
 " =======================================================
 " 使得复制粘贴不会自动注释，会莫名奇妙导致auto indent无效
 syntax enable
@@ -246,17 +239,16 @@ set nomore
 if has('gui_running')
     set mouse=a
 endif
-
+" }}} ===================================================
 " =======================================================
-" im-select
+" im-select {{{
 " =======================================================
 " 必须先下载im-select.exe
 let g:im_select_command = "C:\\im-select\\im-select.exe"
 let g:im_select_default = "1033"
-
-
+" }}}====================================================
 " =======================================================
-" autorun
+" autorun{{{
 " =======================================================
 if has('unix')
     map <silent><F5> :call RunCode()<CR>
@@ -286,9 +278,9 @@ func! RunCode()
     endif
 endfunc
 
-
+" }}}====================================================
 " =======================================================
-" nerd commenter
+" nerd commenter{{{
 " =======================================================
 
 " Create default mappings
@@ -327,8 +319,9 @@ let g:which_key_map.c = {
     \ 'b' : 'NERDCommenterAlignBoth',
     \ }
 
+" }}}====================================================
 "===============================================
-" FZF
+" FZF{{{
 "===============================================
 imap <c-x><c-k> <plug>(fzf-complete-word)
 imap <c-x><c-f> <plug>(fzf-complete-path)
@@ -354,8 +347,9 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 " xmap <leader><tab> <plug>(fzf-maps-x)
 " omap <leader><tab> <plug>(fzf-maps-o)
 
+" }}}====================================================
 "===============================================
-" coc
+" coc{{{
 "===============================================
 "
 " Use tab for trigger completion with characters ahead and navigate.
@@ -569,8 +563,9 @@ let g:which_key_map.l.l = {
             \ 'p':    'coc-list-snippets',
             \ }
 
+" }}}====================================================
 "===============================================
-" vim-wiki
+" vim-wiki{{{
 "===============================================
 let g:which_key_map.w = {
             \ 'name': '+wiki',
@@ -627,8 +622,9 @@ let g:vimwiki_key_mappings =
     \   'mouse': 0,
     \ }
 
+" }}}====================================================
 "===============================================
-" markdown preview
+" markdown preview{{{
 "===============================================
 " set to 1, nvim will open the preview window after entering the markdown buffer
 " default: 0
@@ -727,8 +723,9 @@ let g:mkdp_filetypes = ['markdown', 'vimwiki']
 nmap <leader>m <Plug>MarkdownPreviewToggle
 let g:which_key_map.m = 'markdown-preview-toggle'
 
+" }}}====================================================
 "===============================================
-" easy align
+" easy align{{{
 "===============================================
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
@@ -768,16 +765,18 @@ let g:easy_align_delimiters = {
 \   }
 \ }
 
+" }}}====================================================
 "===============================================
-" async run
+" async run{{{
 "===============================================
 let g:asyncrun_open = 0
 
 " cooperate with fugitive
 command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 
+" }}}====================================================
 "===============================================
-" lightline
+" lightline{{{
 "===============================================
 let g:lightline = {
             \ 'colorscheme': 'one',
@@ -793,13 +792,25 @@ let g:lightline = {
             \ },
             \ }
 
+" }}}====================================================
 "===============================================
-" undotree
+" undotree{{{
 "===============================================
 let g:which_key_map.u = [':UndotreeToggle', 'undotree-toggle']
 
+" }}}====================================================
 "===============================================
-" vista
+" vista{{{
 "===============================================
 let g:vista_default_executive = 'coc'
 let g:which_key_map.l.t = [':Vista!!', 'coc-visual-tags']
+
+" }}}====================================================
+" =======================================================
+" nerdtree{{{
+" =======================================================
+" augroup exit_if_no_other_window
+"     autocmd!
+"     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" augroup END
+" }}}====================================================
