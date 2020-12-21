@@ -114,17 +114,18 @@ call which_key#register('<Space>', "g:which_key_map")
 let g:which_key_map.f = {
             \ 'name': '+find/file/git',
             \ 'f':    ['Files',   'fzf-files'],
-            \ 's':    ['update',  'save-files'],
+            \ 'w':    ['update',  'write-files'],
             \ 'e':    'explore-files',
             \ 'l':    ['Gpull',   'git-pull'],
-            \ 'w':    ['Gwrite',  'git-write'],
+            \ 's':    ['Gwrite',  'git-save'],
             \ 'c':    ['Gcommit', 'git-commit'],
             \ 'g':    ['Rg', 'grep-file'],
-            \ 'd':   [':cd %:p:h', 'cd-current-directory'],
-            \ 'p':    'git-save&push',
+            \ 'd':    [':cd %:p:h', 'cd-current-directory'],
+            \ 'p':    ['Gpush -u origin', 'git-push'],
+            \ 't':    [':call VimConfigGitPush()', 'git-save&push'],
             \ }
 
-nnoremap <silent> <leader>fp :call VimConfigGitPush()<CR>
+" nnoremap <silent> <leader>ft :call VimConfigGitPush()<CR>
 func! VimConfigGitPush()
     exec "Gwrite"
     exec "Gcommit -m 'information update'"
