@@ -6,9 +6,12 @@ if has('unix')
         !sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     endif
     " Run PlugInstall if there are missing plugins
-    autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-                \| PlugInstall --sync | source $MYVIMRC
-                \| endif
+    augroup auto_install_plug
+        autocmd!
+        autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+                    \| PlugInstall --sync | source $MYVIMRC
+                    \| endif
+    augroup end
 endif
 
 " ==================================================
@@ -102,7 +105,10 @@ call which_key#register('<Space>', "g:which_key_map")
 " =======================================================
 " nerdtree
 " =======================================================
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" augroup exit_if_no_other_window
+"     autocmd!
+"     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" augroup END
 
 let g:which_key_map.f = {
             \ 'name': '+find/file/git',
@@ -397,10 +403,13 @@ function! s:show_documentation()
 endfunction
 
 " Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
+augroup holding_highlight
+    autocmd!
+    autocmd CursorHold * silent call CocActionAsync('highlight')
+augroup end
 
 
-augroup mygroup
+augroup format_according_to_filetypes
     autocmd!
     " Setup formatexpr specified filetype(s).
     autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
@@ -484,6 +493,7 @@ nnoremap <silent><nowait> <leader>fe :<C-u>CocCommand explorer<cr>
 let g:coc_global_extensions = [
             \ 'coc-explorer',
             \ 'coc-lists',
+            \ 'coc-git',
             \ 'coc-vimlsp',
             \ 'coc-json',
             \ 'coc-snippets',
