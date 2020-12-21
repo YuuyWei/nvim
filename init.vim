@@ -35,6 +35,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'mhinz/vim-startify'
 " Plug 'altercation/vim-colors-solarized'
 Plug 'rakr/vim-one'
+
 " vim easy editting
 Plug 'junegunn/vim-easy-align'
 Plug 'liuchengxu/vista.vim'
@@ -46,6 +47,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'brglng/vim-im-select'
 Plug 'mbbill/undotree'
+Plug 'voldikss/vim-translator'
 " Plug 'Xuyuanp/nerdtree-git-plugin'
 " Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'skywind3000/asyncrun.vim'
@@ -133,11 +135,11 @@ endif
 
 
 let g:which_key_map.v = {
-            \ 'name': '+vimrc',
+            \ 'name': '+vim',
             \ 'c':    [ ':edit $MYVIMRC', 'open-vimrc' ],
             \ 'r':    [ ':source $MYVIMRC', 'reload-vimrc' ],
             \ 's':    [ ':source $MYVIMRC', 'source-vimscript' ],
-            \ 'i':    [ ':PlugInstall', 'source-vimscript' ],
+            \ 'i':    [ ':PlugInstall', 'install-vim-plugin' ],
             \}
 
 let g:which_key_map.k = {
@@ -548,7 +550,7 @@ let g:coc_snippet_prev = '<c-k>'
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " Use <leader>x for convert visual selected code to snippet
-xmap <leader>x  <Plug>(coc-convert-snippet)
+xmap <leader>lx  <Plug>(coc-convert-snippet)
 
 let g:which_key_map.l = {
             \ 'name': '+coc-lsp',
@@ -556,6 +558,7 @@ let g:which_key_map.l = {
             \ 'f':    'coc-format-selected',
             \ 'a':    'coc-codeaction',
             \ 'q':    'coc-quickfix',
+            \ 'q':    'coc-convert-snippet',
             \ }
 
 let g:which_key_map.l.l = {
@@ -845,4 +848,27 @@ if has('win32')
     let g:terminal_shell = 'powershell.exe'
 endif
 " let g:terminal_cwd=0 "initialize working dir: '0' for unchanged, '1' for file
+" }}}===========================================================================
+"===============================================================================
+" Vim-translator ==={{{
+"===============================================================================
+""" Configuration example
+" Echo translation in the cmdline
+nmap <silent> <Leader>tt <Plug>Translate
+vmap <silent> <Leader>tt <Plug>TranslateV
+" Display translation in a window
+nmap <silent> <Leader>tw <Plug>TranslateW
+vmap <silent> <Leader>tw <Plug>TranslateWV
+" Replace the text with translation
+nmap <silent> <Leader>tr <Plug>TranslateR
+vmap <silent> <Leader>tr <Plug>TranslateRV
+" Translate the text in clipboard
+nmap <silent> <Leader>tx <Plug>TranslateX
+let which_key_map.t = {
+    \ 'name': '+translator',
+    \ 't': 'translate-cmdline',
+    \ 'w': 'translate-window',
+    \ 'r': 'translate-replace',
+    \ 'x': 'translate-in-clipboard',
+  \ }
 " }}}===========================================================================
