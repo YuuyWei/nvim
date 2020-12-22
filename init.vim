@@ -46,7 +46,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/argtextobj.vim'
-Plug 'brglng/vim-im-select'
+" Plug 'brglng/vim-im-select'
 Plug 'mbbill/undotree'
 Plug 'voldikss/vim-translator'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -55,6 +55,11 @@ Plug 'skywind3000/asyncrun.vim'
 Plug 'skywind3000/vim-terminal-help'
 Plug 'liuchengxu/vista.vim'
 " Plug 'albertomontesg/lightline-asyncrun'
+
+" mac and windows only
+if has('win32') || has('macunix')
+    Plug 'YuuyWei/smartim'
+endif
 
 " wiki
 " Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
@@ -248,13 +253,6 @@ augroup vim_fold
     autocmd FileType vim set foldmethod=marker
 augroup END
 " }}} ========================================================================
-" ============================================================================
-" im-select {{{
-" ============================================================================
-" 必须先下载im-select.exe
-let g:im_select_command = "C:\\im-select\\im-select.exe"
-let g:im_select_default = "1033"
-" }}}=========================================================================
 " ============================================================================
 " autorun{{{
 " ============================================================================
@@ -898,4 +896,9 @@ let g:which_key_map.m.i = 'markdown-img-paste'
 " them
 " let g:mdip_imgdir = 'img'
 " let g:mdip_imgname = 'image'
+" }}}===========================================================================
+"===============================================================================
+" smartim {{{
+"===============================================================================
+let g:smartim_default = "1033"
 " }}}===========================================================================
