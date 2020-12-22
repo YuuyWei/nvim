@@ -312,20 +312,20 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:NERDToggleCheckAllLines = 1
 
 let g:which_key_map.c = {
-            \ 'name' : '+nerdcommenter',
-            \ ' ' : 'NERDCommenterToggle',
-            \ 'c' : 'NERDCommenterComment',
-            \ 'n' : 'NERDCommenterNested',
-            \ 'm' : 'NERDCommenterMinimal',
-            \ 'i' : 'NERDCommenterInvert',
-            \ 's' : 'NERDCommenterSexy',
-            \ 'y' : 'NERDCommenterYank',
-            \ '$' : 'NERDCommenterToEOL',
-            \ 'A' : 'NERDCommenterAppend',
-            \ 'u' : 'NERDCommenterUncomment',
-            \ 'a' : 'NERDCommenterAltDelims',
-            \ 'l' : 'NERDCommenterAlignLeft',
-            \ 'b' : 'NERDCommenterAlignBoth',
+            \ 'name' : '+commenter',
+            \ ' ' : 'CommenterToggle',
+            \ 'c' : 'CommenterComment',
+            \ 'n' : 'CommenterNested',
+            \ 'm' : 'CommenterMinimal',
+            \ 'i' : 'CommenterInvert',
+            \ 's' : 'CommenterSexy',
+            \ 'y' : 'CommenterYank',
+            \ '$' : 'CommenterToEOL',
+            \ 'A' : 'CommenterAppend',
+            \ 'u' : 'CommenterUncomment',
+            \ 'a' : 'CommenterAltDelims',
+            \ 'l' : 'CommenterAlignLeft',
+            \ 'b' : 'CommenterAlignBoth',
             \ }
 
 " }}}=========================================================================
