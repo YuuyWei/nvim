@@ -34,8 +34,8 @@ Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'itchyny/lightline.vim'
 Plug 'mhinz/vim-startify'
-" Plug 'altercation/vim-colors-solarized'
-Plug 'rakr/vim-one'
+Plug 'lifepillar/vim-solarized8'
+" Plug 'rakr/vim-one'
 
 " vim easy editting
 Plug 'junegunn/vim-easy-align'
@@ -49,8 +49,8 @@ Plug 'vim-scripts/argtextobj.vim'
 Plug 'brglng/vim-im-select'
 Plug 'mbbill/undotree'
 Plug 'voldikss/vim-translator'
-" Plug 'Xuyuanp/nerdtree-git-plugin'
-" Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'preservim/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'skywind3000/asyncrun.vim'
 Plug 'skywind3000/vim-terminal-help'
 Plug 'liuchengxu/vista.vim'
@@ -59,6 +59,7 @@ Plug 'liuchengxu/vista.vim'
 " wiki
 " Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
 Plug 'iamcco/markdown-preview.nvim' , { 'do': { -> mkdp#util#install()  }}
+Plug 'ferrine/md-img-paste.vim'
 " Plug 'vimwiki/vimwiki'
 Plug 'YuuyWei/vimwiki', {'branch': 'dev'}
 
@@ -94,12 +95,17 @@ Plug 'junegunn/fzf.vim'
 call plug#end()
 " }}}=========================================================================
 " ============================================================================
-" which-key {{{ 
+" key-mappings {{{ 
 " ============================================================================
-let g:mapleader = "\<Space>"
+nnoremap j gj
+vnoremap j gj
+nnoremap k gk
+vnoremap k gk
 
+let g:mapleader = "\<Space>"
 nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
 vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
+
 " Define prefix dictionary
 let g:which_key_map =  {}
 call which_key#register('<Space>', "g:which_key_map")
@@ -114,18 +120,18 @@ call which_key#register('<Space>', "g:which_key_map")
 let g:which_key_map.f = {
             \ 'name': '+find/file/git',
             \ 'f':    ['Files',   'fzf-files'],
+            \ 'a':    ['Git add .',   'git-add-all'],
             \ 'w':    ['update',  'write-files'],
-            \ 'e':    'explore-files',
+            \ 'e':    [':NERDTreeToggle',  'explore-files'],
             \ 'l':    ['Gpull',   'git-pull'],
             \ 's':    ['Gwrite',  'git-save'],
             \ 'c':    ['Gcommit', 'git-commit'],
             \ 'g':    ['Rg', 'grep-file'],
             \ 'd':    [':cd %:p:h', 'cd-current-directory'],
-            \ 'p':    ['Gpush -u origin', 'git-push'],
+            \ 'p':    [':Gpush -u origin', 'git-push'],
             \ 't':    [':call VimConfigGitPush()', 'git-save&push'],
             \ }
 
-" nnoremap <silent> <leader>ft :call VimConfigGitPush()<CR>
 func! VimConfigGitPush()
     exec "Gwrite"
     exec "Gcommit -m 'information update'"
@@ -187,8 +193,10 @@ let g:which_key_map.b = {
 " ============================================================================
 " 使得复制粘贴不会自动注释，会莫名奇妙导致auto indent无效
 syntax enable
-colorscheme one
-set formatoptions+=m
+colorscheme solarized8
+set laststatus=2
+set background=light
+" set formatoptions+=m "使得中文也能自动切断
 set textwidth=78
 set fileencodings=ucs-bom,utf-8,cp936
 set fileencoding=utf-8
@@ -340,12 +348,14 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 "   - 'rounded' / 'sharp' / 'horizontal' / 'vertical' / 'top' / 'bottom' /
 "   'left' / 'right'
 if has('win32')
-    let g:fzf_layout = { 'down': '~40%' }
-else
-    let g:fzf_layout = {
-                \ 'window': { 'width': 0.9, 'height': 0.6,
-                \             'border': 'sharp'}
-                \ }
+    let g:fzf_preview_window = []
+    let g:fzf_layout = {'down': '~40%'}
+    if has('nvim') 
+        autocmd! FileType fzf
+        autocmd  FileType fzf set laststatus=0 noshowmode noruler
+                    \| autocmd BufLeave <buffer> 
+                    \  set laststatus=2 showmode ruler
+    endif
 endif
 
 " nmap <leader><tab> <plug>(fzf-maps-n)
@@ -359,7 +369,6 @@ endif
 
 " coc extensions
 let g:coc_global_extensions = [
-            \ 'coc-explorer',
             \ 'coc-lists',
             \ 'coc-git',
             \ 'coc-vimlsp',
@@ -535,8 +544,6 @@ nnoremap <silent><nowait> <leader>llk  :<C-u>CocPrev<CR>
 nnoremap <silent><nowait> <leader>llr  :<C-u>CocListResume<CR>
 " Find snippets of current document.
 nnoremap <silent><nowait> <leader>lln  :<C-u>CocList snippets<cr>
-
-nnoremap <silent><nowait> <leader>fe :<C-u>CocCommand explorer<cr>
 
 " coc snippets 
 " Use <C-l> for trigger snippet expand.
@@ -810,7 +817,7 @@ command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 " lightline{{{
 "=============================================================================
 let g:lightline = {
-            \ 'colorscheme': 'one',
+            \ 'colorscheme': 'solarized',
             \ 'active': {
             \   'left': [ [ 'mode', 'paste' ],
             \             [ 'gitbranch', 'readonly', 'filename', 'modified']],
@@ -841,14 +848,14 @@ let g:which_key_map.l.t = [':Vista!!', 'coc-visual-tags']
 " ============================================================================
 " nerdtree{{{
 " ============================================================================
-" augroup exit_if_no_other_window
-"     autocmd!
-"     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")
-"                 \ && b:NERDTree.isTabTree()) | q | endif
-" augroup END
+augroup exit_if_no_other_window
+    autocmd!
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")
+                \ && b:NERDTree.isTabTree()) | q | endif
+augroup END
 " }}}=========================================================================
 "=============================================================================
-" terminal help ==={{{
+" terminal help {{{
 "=============================================================================
 if has('win32')
     let g:terminal_shell = 'powershell.exe'
@@ -856,7 +863,7 @@ endif
 " let g:terminal_cwd=0 "initialize working dir: '0' for unchanged,'1' for file
 " }}}=========================================================================
 "=============================================================================
-" Vim-translator ==={{{
+" Vim-translator {{{
 "=============================================================================
 """ Configuration example
 " Echo translation in the cmdline
@@ -878,3 +885,17 @@ let which_key_map.t = {
     \ 'x': 'translate-in-clipboard',
   \ }
 " }}}=========================================================================
+"===============================================================================
+" md-img-paste {{{
+"===============================================================================
+augroup md_im_paste
+    autocmd!
+autocmd FileType markdown nmap <buffer><silent> <leader>mi :call
+            \ mdip#MarkdownClipboardImage()<CR>
+augroup END
+let g:which_key_map.m.i = 'markdown-img-paste'
+" there are some defaults for image directory and image name, you can change
+" them
+" let g:mdip_imgdir = 'img'
+" let g:mdip_imgname = 'image'
+" }}}===========================================================================
