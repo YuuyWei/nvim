@@ -58,10 +58,10 @@ Plug 'liuchengxu/vista.vim'
 
 " mac and windows only
 " if has('win32') || has('macunix')
-"     Plug 'YuuyWei/smartim'
+"     Plug 'git@github.com:YuuyWei/smartim'
 " endif
 
-Plug 'YuuyWei/bx_vimim_dict'
+Plug 'git@github.com:YuuyWei/ywvim.git'
 
 " wiki
 " Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
@@ -126,24 +126,19 @@ call which_key#register('<Space>', "g:which_key_map")
 
 let g:which_key_map.f = {
             \ 'name': '+find/file/git',
-            \ 'f':    ['Files',   'fzf-files'],
-            \ 'a':    ['Git add .',   'git-add-all'],
-            \ 'w':    ['update',  'write-files'],
-            \ 'e':    [':NERDTreeToggle',  'explore-files'],
+            \ 'f':    [':Files %:p:h',   'fzf-files'],
+            \ 'e':    [':NERDTreeToggle %:p:h',  'explore-files'],
+            \ 'r':    [':NERDTreeToggleVCS %:p:h',  'root-working-dir-top'],
             \ 'l':    ['Gpull',   'git-pull'],
             \ 's':    ['Gwrite',  'git-save'],
-            \ 'c':    ['Gcommit', 'git-commit'],
+            \ 'c':    [':Git add . | Gcommit', 'git-commit'],
             \ 'g':    ['Rg', 'grep-file'],
             \ 'd':    [':cd %:p:h', 'cd-current-directory'],
             \ 'p':    [':Gpush -u origin', 'git-push'],
-            \ 't':    [':call VimConfigGitPush()', 'git-save&push'],
+            \ 't':    [':Gwrite | Gcommit | Gpush -u origin main',
+            \          'git-save&push'],
             \ }
 
-func! VimConfigGitPush()
-    exec "Gwrite"
-    exec "Gcommit -m 'information update'"
-    exec "Gpush -u origin main"
-endfunc
 if has('linux')
     let g:which_key_map.f.u = [ ':write !sudo tee %', 'sudo-save' ]
 endif
@@ -153,14 +148,26 @@ let g:which_key_map.v = {
             \ 'name': '+vim',
             \ 'c':    [ ':edit $MYVIMRC', 'open-vimrc' ],
             \ 'r':    [ ':source $MYVIMRC', 'reload-vimrc' ],
-            \ 's':    [ ':source $MYVIMRC', 'source-vimscript' ],
-            \ 'i':    [ ':PlugInstall', 'install-vim-plugin' ],
+            \ 's':    [ ':source %', 'source-cf-vimscript' ],
+            \ 'i':    [ ':source $MYVIMRC | PlugInstall', 'install-vim-plugin' ],
             \}
+
+" quickfix toggle
+let g:quickfix_is_open = 0
+
+function! QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+    else
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction
 
 let g:which_key_map.k = {
             \ 'name' : '+windows',
-            \ 'q': ['copen',      'open-quickfix' ],
-            \ 'c': ['cclose',      'close-quickfix' ],
+            \ 'q': [':call QuickfixToggle()',      'quickfix-toggle' ],
             \ 'o': ['lopen',      'open-locationlist' ],
             \ 'w': ['<C-W>w',     'other-window'],
             \ 'd': ['<C-W>c',     'delete-window'],
@@ -853,6 +860,7 @@ augroup exit_if_no_other_window
     autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree")
                 \ && b:NERDTree.isTabTree()) | q | endif
 augroup END
+let g:NERDTreeChDirMode = 2
 " }}}=========================================================================
 "=============================================================================
 " terminal help {{{
@@ -885,9 +893,9 @@ let which_key_map.t = {
     \ 'x': 'translate-in-clipboard',
   \ }
 " }}}=========================================================================
-"===============================================================================
+"=============================================================================
 " md-img-paste {{{
-"===============================================================================
+"=============================================================================
 augroup md_im_paste
     autocmd!
 autocmd FileType markdown nmap <buffer><silent> <leader>mi :call
@@ -898,9 +906,34 @@ let g:which_key_map.m.i = 'markdown-img-paste'
 " them
 " let g:mdip_imgdir = 'img'
 " let g:mdip_imgname = 'image'
-" }}}===========================================================================
-" "===============================================================================
-" " " smartim {{{
-" "===============================================================================
+" }}}=========================================================================
+"=============================================================================
+" smartim {{{
+"=============================================================================
 " let g:smartim_default = "1033"
-" " }}}===========================================================================
+" }}}=========================================================================
+"=============================================================================
+" ywvim {{{
+"=============================================================================
+let g:ywvim_ims= [
+            \ ['xh', '鹤形', 'xiaohe.ywvim'],
+            \ ['wb', '五笔', 'wubi.ywvim'],
+            \ ['py', '拼音', 'pinyin.ywvim'],
+            \ ]
+
+" let g:ywvim_xh = { 'helpim':'xh', 'gb':0 }
+let g:ywvim_zhpunc = 1
+let g:ywvim_listmax = 3
+let g:ywvim_esc_autoff = 0
+let g:ywvim_autoinput = 2 "自动上屏
+let g:ywvim_circlecandidates = 1
+" let g:ywvim_helpim_on = 1
+let g:ywvim_matchexact = 0
+let g:ywvim_chinesecode = 1
+let g:ywvim_gb = 0
+let g:ywvim_preconv = 'g2b'
+let g:ywvim_conv = ''
+let g:ywvim_lockb = 1
+let g:ywvim_theme = 'light'
+let g:ywvim_intelligent_punc = 1
+" }}}=========================================================================
