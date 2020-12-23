@@ -129,8 +129,8 @@ let g:which_key_map.f = {
             \ 'e':    [':NERDTreeToggle %:p:h',    'explore-files'],
             \ 'r':    [':NERDTreeToggleVCS %:p:h', 'find-tree-root'],
             \ 'l':    ['Gpull',                    'git-pull'],
-            \ 'a':    [':Git add .',               'git-add-all'],
-            \ 'p':    [':Gcommit | Gpush',         'git-commit&push'],
+            \ 'p':    ['Gpush',                    'git-pull'],
+            \ 'c':    [':Git add . | Gcommit',     'git-add&commit'],
             \ 'g':    ['Rg',                       'grep-file'],
             \ 'd':    [':cd %:p:h',                'cd-current-directory'],
             \ }
