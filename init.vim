@@ -57,9 +57,11 @@ Plug 'liuchengxu/vista.vim'
 " Plug 'albertomontesg/lightline-asyncrun'
 
 " mac and windows only
-if has('win32') || has('macunix')
-    Plug 'YuuyWei/smartim'
-endif
+" if has('win32') || has('macunix')
+"     Plug 'YuuyWei/smartim'
+" endif
+
+Plug 'YuuyWei/bx_vimim_dict'
 
 " wiki
 " Plug 'dhruvasagar/vim-table-mode', {'on': 'TableModeToggle'}
@@ -644,7 +646,7 @@ let g:vimwiki_key_mappings =
             \   'table_format': 1,
             \   'table_mappings': 0,
             \   'lists': 1,
-            \   'lists_return': 0,
+            \   'lists_return': 1,
             \   'links': 1,
             \   'html': 1,
             \   'mouse': 0,
@@ -897,8 +899,8 @@ let g:which_key_map.m.i = 'markdown-img-paste'
 " let g:mdip_imgdir = 'img'
 " let g:mdip_imgname = 'image'
 " }}}===========================================================================
-"===============================================================================
-" smartim {{{
-"===============================================================================
-let g:smartim_default = "1033"
-" }}}===========================================================================
+" "===============================================================================
+" " " smartim {{{
+" "===============================================================================
+" let g:smartim_default = "1033"
+" " }}}===========================================================================
