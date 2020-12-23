@@ -1,13 +1,11 @@
 " ==================================================
 " gui config 
 " ==================================================
-if exists('g:GuiLoaded')
-    GuiPopupmenu 0
-    call GuiWindowMaximized(1)
-    if has('win32')
-        GuiFont! sarasa mono sc:h12
-    endif
+GuiPopupmenu 0
+if has('win32')
+    GuiFont! sarasa mono sc:h12
 endif
+
 
 " if has('win32')
 "     set guifont=Consolas:h12:cANSI

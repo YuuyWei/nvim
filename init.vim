@@ -123,16 +123,16 @@ call which_key#register('<Space>', "g:which_key_map")
 " Unnamed groups will show a default empty string.
 " Create menus based on existing mappings
 " You can pass a descriptive text to an existing mapping.
-
 let g:which_key_map.f = {
             \ 'name': '+find/file/git',
-            \ 'f':    [':Files %:p:h',   'fzf-files'],
-            \ 'e':    [':NERDTreeToggle %:p:h',  'explore-files'],
-            \ 'r':    [':NERDTreeToggleVCS %:p:h',  'root-working-dir-top'],
-            \ 'l':    ['Gpull',   'git-pull'],
-            \ 'p':    [':Gwrite | Git add . | Gcommit | Gpush', 'git-save&push'],
-            \ 'g':    ['Rg', 'grep-file'],
-            \ 'd':    [':cd %:p:h', 'cd-current-directory'],
+            \ 'f':    [':Files %:p:h',             'fzf-files'],
+            \ 'e':    [':NERDTreeToggle %:p:h',    'explore-files'],
+            \ 'r':    [':NERDTreeToggleVCS %:p:h', 'find-tree-root'],
+            \ 'l':    ['Gpull',                    'git-pull'],
+            \ 'a':    [':Git add .',               'git-add-all'],
+            \ 'p':    [':Gcommit | Gpush',         'git-commit&push'],
+            \ 'g':    ['Rg',                       'grep-file'],
+            \ 'd':    [':cd %:p:h',                'cd-current-directory'],
             \ }
 
 if has('linux')
@@ -142,10 +142,11 @@ endif
 
 let g:which_key_map.v = {
             \ 'name': '+vim',
-            \ 'c':    [ ':edit $MYVIMRC', 'open-vimrc' ],
+            \ 'c':    [ ':edit $MYVIMRC',   'open-vimrc' ],
             \ 'r':    [ ':source $MYVIMRC', 'reload-vimrc' ],
-            \ 's':    [ ':source %', 'source-cf-vimscript' ],
-            \ 'i':    [ ':source $MYVIMRC | PlugInstall', 'install-vim-plugin' ],
+            \ 's':    [ ':source %',        'source-cf-vimscript'],
+            \ 'i':    [ ':source $MYVIMRC | PlugInstall',
+                      \ 'install-vim-plugin'],
             \}
 
 " quickfix toggle
@@ -163,25 +164,25 @@ endfunction
 
 let g:which_key_map.k = {
             \ 'name' : '+windows',
-            \ 'q': [':call QuickfixToggle()',      'quickfix-toggle' ],
-            \ 'o': ['lopen',      'open-locationlist' ],
-            \ 'w': ['<C-W>w',     'other-window'],
-            \ 'd': ['<C-W>c',     'delete-window'],
-            \ '-': ['<C-W>s',     'split-window-below'],
-            \ '|': ['<C-W>v',     'split-window-right'],
-            \ '2': ['<C-W>v',     'layout-double-columns'],
-            \ 'h': ['<C-W>h',     'window-left'],
-            \ 'j': ['<C-W>j',     'window-below'],
-            \ 'l': ['<C-W>l',     'window-right'],
-            \ 'k': ['<C-W>k',     'window-up'],
-            \ 'H': ['<C-W>5<',    'expand-window-left'],
-            \ 'J': [':resize +5', 'expand-window-below'],
-            \ 'L': ['<C-W>5>',    'expand-window-right'],
-            \ 'K': [':resize -5', 'expand-window-up'],
-            \ '=': ['<C-W>=',     'balance-window'],
-            \ 's': ['<C-W>s',     'split-window-below'],
-            \ 'v': ['<C-W>v',     'split-window-right'],
-            \ '?': ['Windows',    'fzf-window'],
+            \ 'q': [':call QuickfixToggle()', 'quickfix-toggle' ],
+            \ 'o': ['lopen',                  'open-locationlist' ],
+            \ 'w': ['<C-W>w',                 'other-window'],
+            \ 'd': ['<C-W>c',                 'delete-window'],
+            \ '-': ['<C-W>s',                 'split-window-below'],
+            \ '|': ['<C-W>v',                 'split-window-right'],
+            \ '2': ['<C-W>v',                 'layout-double-columns'],
+            \ 'h': ['<C-W>h',                 'window-left'],
+            \ 'j': ['<C-W>j',                 'window-below'],
+            \ 'l': ['<C-W>l',                 'window-right'],
+            \ 'k': ['<C-W>k',                 'window-up'],
+            \ 'H': ['<C-W>5<',                'expand-window-left'],
+            \ 'J': [':resize +5',             'expand-window-below'],
+            \ 'L': ['<C-W>5>',                'expand-window-right'],
+            \ 'K': [':resize -5',             'expand-window-up'],
+            \ '=': ['<C-W>=',                 'balance-window'],
+            \ 's': ['<C-W>s',                 'split-window-below'],
+            \ 'v': ['<C-W>v',                 'split-window-right'],
+            \ '?': ['Windows',                'fzf-window'],
             \ }
 
 let g:which_key_map.b = {
@@ -212,7 +213,7 @@ set fileencodings=ucs-bom,utf-8,cp936
 set fileencoding=utf-8
 set encoding=utf-8
 set termencoding=utf-8
-set pastetoggle=<f12>
+set pastetoggle=<C-H>
 set spell
 set spelllang=en_us,cjk
 set hidden
@@ -253,10 +254,6 @@ set nomore
 if has('gui_running')
     set mouse=a
 endif
-augroup vim_fold
-    autocmd!
-    autocmd FileType vim set foldmethod=marker
-augroup END
 " }}} ========================================================================
 " ============================================================================
 " autorun{{{
@@ -269,23 +266,23 @@ endif
 func! RunCode()
     exec "w"
     if &filetype == 'c'
-        exec '!gcc -Werror % -o %<'
-        exec '!time ./%<'
+        exec 'AsyncRun gcc -Werror % -o %<'
+        exec 'AsyncRun time ./%<'
     elseif &filetype == 'c++'
-        exec '!g++ -Werror % -o %<'
-        exec '!time ./%<'
+        exec 'AsyncRun g++ -Werror % -o %<'
+        exec 'AsyncRun time ./%<'
     elseif &filetype == 'java'
-        exec '!javac %'
-        exec '!time java %:.:r'
+        exec 'AsyncRun javac %'
+        exec 'AsyncRun time java %:.:r'
     elseif &filetype == 'python'
-        exec '!time python3 %'
+        exec 'AsyncRun time python3 %'
     elseif &filetype == 'go'
-        exec '!time go run %'
+        exec 'AsyncRun time go run %'
     elseif &filetype == 'vim'
-        exec 'source ~/.config/nvim/init.vim'
+        exec 'source $MYVIMRC'
         exec 'PlugInstall'
     elseif &filetype == 'rust'
-        exec '!cargo run'
+        exec 'AsyncRun cargo run'
     endif
 endfunc
 
@@ -933,3 +930,4 @@ let g:ywvim_lockb = 1
 let g:ywvim_theme = 'light'
 let g:ywvim_intelligent_punc = 1
 " }}}=========================================================================
+"       vim: foldmethod=marker
