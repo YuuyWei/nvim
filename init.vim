@@ -130,13 +130,9 @@ let g:which_key_map.f = {
             \ 'e':    [':NERDTreeToggle %:p:h',  'explore-files'],
             \ 'r':    [':NERDTreeToggleVCS %:p:h',  'root-working-dir-top'],
             \ 'l':    ['Gpull',   'git-pull'],
-            \ 's':    ['Gwrite',  'git-save'],
-            \ 'c':    [':Git add . | Gcommit', 'git-commit'],
+            \ 'p':    [':Gwrite | Git add . | Gcommit | Gpush', 'git-save&push'],
             \ 'g':    ['Rg', 'grep-file'],
             \ 'd':    [':cd %:p:h', 'cd-current-directory'],
-            \ 'p':    [':Gpush -u origin', 'git-push'],
-            \ 't':    [':Gwrite | Gcommit | Gpush -u origin main',
-            \          'git-save&push'],
             \ }
 
 if has('linux')
