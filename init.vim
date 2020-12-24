@@ -206,7 +206,7 @@ let g:which_key_map.b = {
 syntax enable
 colorscheme solarized8
 set laststatus=2
-set background=light
+set background=dark
 " set formatoptions+=m "使得中文也能自动切断
 set textwidth=78
 set fileencodings=ucs-bom,utf-8,cp936
