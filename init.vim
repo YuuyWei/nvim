@@ -35,7 +35,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'itchyny/lightline.vim'
 Plug 'mhinz/vim-startify'
 Plug 'lifepillar/vim-solarized8'
-" Plug 'rakr/vim-one'
+Plug 'rakr/vim-one'
 
 " vim easy editting
 Plug 'junegunn/vim-easy-align'
@@ -129,7 +129,7 @@ let g:which_key_map.f = {
             \ 'e':    [':NERDTreeToggle %:p:h',    'explore-files'],
             \ 'r':    [':NERDTreeToggleVCS %:p:h', 'find-tree-root'],
             \ 'l':    ['Gpull',                    'git-pull'],
-            \ 'p':    ['Gpush',                    'git-pull'],
+            \ 'p':    ['Gpush',                    'git-push'],
             \ 'c':    [':Git add . | Gcommit',     'git-add&commit'],
             \ 'g':    ['Rg',                       'grep-file'],
             \ 'd':    [':cd %:p:h',                'cd-current-directory'],
@@ -204,11 +204,17 @@ let g:which_key_map.b = {
 " ============================================================================
 " 使得复制粘贴不会自动注释，会莫名奇妙导致auto indent无效
 syntax enable
-colorscheme solarized8
 set laststatus=2
-set background=light
+if has('gui_running')
+    colorscheme solarized8
+    set background=light
+else
+    colorscheme one
+    set background=dark
+endif
 " set formatoptions+=m "使得中文也能自动切断
 set textwidth=78
+set termguicolors
 set fileencodings=ucs-bom,utf-8,cp936
 set fileencoding=utf-8
 set encoding=utf-8
@@ -817,7 +823,6 @@ command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 " lightline{{{
 "=============================================================================
 let g:lightline = {
-            \ 'colorscheme': 'solarized',
             \ 'active': {
             \   'left': [ [ 'mode', 'paste' ],
             \             [ 'gitbranch', 'readonly', 'filename', 'modified']],
@@ -830,6 +835,11 @@ let g:lightline = {
             \   'gitbranch': 'FugitiveHead',
             \ },
             \ }
+if has('gui_running')
+    let g:lightline.colorscheme = 'solarized8'
+else
+    let g:lightline.colorscheme = 'one'
+endif
 
 " }}}=========================================================================
 "=============================================================================
