@@ -1,0 +1,78 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]]
+repo = 'tyru/caw.vim'
+
+[[plugins]]
+repo = 'junegunn/rainbow_parentheses.vim'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'rakr/vim-one'
+hook_add = 'colorscheme one'
+
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
+
+[[plugins]]
+repo = 'glepnir/galaxyline.nvim'
+depends = 'nvim-web-devicons'
+
+[[plugins]]
+repo = 'liuchengxu/vim-clap'
+build = ':Clap install-binary!'
+on_cmd = 'Clap'
+hook_source = '''
+let g:clap_layout = { 'relative': 'editor'  }
+'''
+
+[[plugins]]
+repo = 'glepnir/dashboard-nvim'
+hook_add = '''
+let g:dashboard_default_executive ='clap'
+let g:dashboard_custom_shortcut={
+	\ 'last_session'       : 'SPC s l',
+	\ 'find_history'       : 'SPC f h',
+	\ 'find_file'          : 'SPC f f',
+	\ 'new_file'           : 'SPC c n',
+	\ 'change_colorscheme' : 'SPC t c',
+	\ 'find_word'          : 'SPC f a',
+	\ 'book_marks'         : 'SPC f b',
+	\ }
+'''
+
+[[plugins]]
+repo = 'git@github.com:YuuyWei/ywvim.git'
+hook_add = '''
+let g:ywvim_ims= [
+            \ ['xh', '鹤形', 'xiaohe.ywvim'],
+            \ ['wb', '五笔', 'wubi.ywvim'],
+            \ ['py', '拼音', 'pinyin.ywvim'],
+            \ ]
+
+let g:ywvim_xh = { 'helpim':'xh', 'gb':0 }
+let g:ywvim_zhpunc = 1
+let g:ywvim_listmax = 3
+let g:ywvim_esc_autoff = 0
+let g:ywvim_autoinput = 2 "自动上屏
+let g:ywvim_circlecandidates = 1
+let g:ywvim_helpim_on = 1
+let g:ywvim_matchexact = 0
+let g:ywvim_chinesecode = 1
+let g:ywvim_gb = 0
+let g:ywvim_preconv = 'g2b'
+let g:ywvim_conv = ''
+let g:ywvim_lockb = 1
+let g:ywvim_theme = 'dark'
+let g:ywvim_intelligent_punc = 1
+'''
+
