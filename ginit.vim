@@ -3,7 +3,7 @@
 " ==================================================
 GuiPopupmenu 0
 if has('win32')
-    GuiFont! sarasa mono sc:h12
+    GuiFont! sarasa mono sc nerd:h12
 endif
 
 
