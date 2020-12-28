@@ -57,8 +57,8 @@ local main = function()
     disable_distribution_plugins()
     leader_map()
 
-    options:load_options()
     dein:load_repos()
+    options:load_options()
     require('colorscheme.eviline')
 end
 

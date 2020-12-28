@@ -97,7 +97,7 @@ function options:load_options()
         wrap           = false,
         linebreak      = true,
         number         = true,
-        colorcolumn    = "78",
+        -- colorcolumn    = "78",
         foldenable     = true,
         foldmethod     = "marker",
         signcolumn     = "yes",
