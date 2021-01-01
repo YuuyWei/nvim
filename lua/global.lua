@@ -8,7 +8,7 @@ function global:load_variables()
   self.is_linux   = os_name == 'Linux'
   self.is_windows = os_name == 'Windows'
   self.vim_path    = vim.fn.stdpath('config')
-  self.cache_dir   = vim.fn.stdpath('cache')
+  self.cache_dir   = vim.fn.stdpath('cache')..path_sep
   self.modules_dir = self.vim_path .. path_sep..'modules'..path_sep
   self.path_sep = path_sep
   self.home = home

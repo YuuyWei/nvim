@@ -110,8 +110,6 @@ nnoremap k gk
 vnoremap k gk
 
 let g:mapleader = "\<Space>"
-nnoremap <silent> <leader> :<c-u>WhichKey '<Space>'<CR>
-vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
 
 " Define prefix dictionary
 let g:which_key_map =  {}
@@ -596,67 +594,6 @@ let g:which_key_map.l.l = {
 "=============================================================================
 " vim-wiki{{{
 "=============================================================================
-let g:which_key_map.w = {
-            \ 'name': '+wiki',
-            \ 'i':    'wiki-diary-index',
-            \ 't':    'wiki-table-index',
-            \ 'w':    'wiki-index',
-            \ 's':    'wiki-select',
-            \ 'd':    'wiki-delete-file',
-            \ 'h':    'wiki-2HTML',
-            \ 'hh':    'wiki-2HTML&browse',
-            \ 'n':    'wiki-goto',
-            \ 'r':    'wiki-rename-file',
-            \ }
-
-let g:which_key_map.w.g = {
-            \ 'name': '+wiki-generate',
-            \ 'l': [':VimwikiGenerateLinks',  'wiki-generate-links'],
-            \ 't': [':VimwikiGenerateTagLinks',  'wiki-generate-tag-links'],
-            \ }
-
-let g:which_key_map.w[' '] = {
-            \ 'name': '+wiki-diary',
-            \ 'i':    'wiki-diary-generate-links',
-            \ 't':    'wiki-diary-tablemake-notes',
-            \ 'w':    'wiki-diary-make-notes',
-            \ 'm':    'wiki-diary-make-tomorrow-notes',
-            \ 'y':    'wiki-diary-make-yesterday-notes',
-            \ }
-
-let g:vimwiki_list = [{
-            \ 'path': '~/vimwiki/',
-            \ 'links_space_char': '_',
-            \ 'auto_tags': 1,
-            \ 'syntax': 'markdown',
-            \ 'ext': '.md'}]
-
-let g:vimwiki_ext2syntax = {
-            \'.rmd': 'markdown',
-            \'.Rmd': 'markdown',
-            \'.markdown': 'markdown',
-            \'.md': 'markdown',
-            \'.mdown': 'markdown'}
-
-let g:vimwiki_filetypes = ['markdown', 'pandoc']
-
-let g:vimwiki_markdown_link_ext = 1
-
-" disable the insert mappings
-let g:vimwiki_key_mappings =
-            \ {
-            \   'all_maps': 1,
-            \   'global': 1,
-            \   'headers': 1,
-            \   'text_objs': 1,
-            \   'table_format': 1,
-            \   'table_mappings': 0,
-            \   'lists': 1,
-            \   'lists_return': 1,
-            \   'links': 1,
-            \   'html': 1,
-            \   'mouse': 0,
-            \ }
 
 " }}}=========================================================================
 "=============================================================================

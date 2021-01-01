@@ -7,5 +7,9 @@ repo = 'liuchengxu/vim-clap'
 build = ':Clap install-binary!'
 on_cmd = 'Clap'
 hook_source = '''
+let g:which_key_map.f = {
+    \ 'name' : '+clap',
+    \ 'f'    : [':Clap files']
+}
 let g:clap_layout = { 'relative': 'editor'  }
 '''

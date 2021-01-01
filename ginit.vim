@@ -6,7 +6,6 @@ if has('win32')
     GuiFont! sarasa mono sc nerd:h12
 endif
 
-
 " if has('win32')
 "     set guifont=Consolas:h12:cANSI
 "     set guifontwide=YaHei_Mono:h12.5:cGB2312

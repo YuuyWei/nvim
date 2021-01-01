@@ -1,20 +1,67 @@
+local search = require('imnvim.search').search
+local process = require('imnvim.search').process
+local api = vim.api
 local vim = vim
-local input = 'wo'
-local path = vim.fn.stdpath('config')..'/xiaohe.txt'
-local lines = vim.fn.system(string.format([[rg -e '^%s=' %s]], input, path))
+local window = {input = '', result = {}}
 
+function window:open_window()
+    buf = api.nvim_create_buf(false, true)
+    api.nvim_buf_set_option(buf, 'bufhidden', 'wipe')
+    api.nvim_buf_set_option(buf, 'filetype', 'imnvim')
+    self.buf = buf
 
-local parse = function(string)
-    local results = {}
-    for alphas, chinese in string.gmatch(string, [[(%l+)=%d+,(%S+)]]) do
-        table.insert(results, {
-            -- 总体宽度 UTF8中一个汉字3个字节，而等宽字体一般占2个字母宽度
-            width = math.ceil(#chinese/3*2) + #alphas + 2,
-            string = chinese .. '['.. alphas ..']',
-        })
-    end
-    return results
+    local opts = {
+        style = "minimal",
+        relative = "cursor",
+        width = 1,
+        height = 1,
+        row = 0,
+        col = 0
+    }
+
+    -- 进入新的窗口
+    self.win = api.nvim_open_win(buf, false, opts)
 end
 
-return parse(lines)
+function window:update_view()
+    local line, line_width, header_width = process(self.result)
+    -- 更改窗口宽度
+    local opts = {
+        width = line_width,
+    }
+    api.nvim_win_set_config(self.win, opts)
 
+    api.nvim_buf_set_option(self.buf, 'modifiable', true)
+
+    api.nvim_buf_set_lines(self.buf, 0, -1, false, {line})
+    api.nvim_buf_add_highlight(self.buf, -1, 'Pmenu', 0, 0, -1)
+    api.nvim_buf_add_highlight(self.buf, -1, 'PmenuSel', 0, 0, header_width)
+
+    api.nvim_buf_set_option(self.buf, 'modifiable', false)
+end
+
+function window:close_window()
+    api.nvim_win_close(self.win, true)
+end
+
+
+function window:delete()
+    self.input = string.sub(self.input, 1, -2)
+    self.result = search(self.input)
+    self:update_view()
+end
+
+function window:add_key(key)
+    self.input = self.input .. key
+    self.result = search(self.input)
+    self:update_view()
+end
+
+function window:new(o)
+    o = o or {}
+    self.__index = self
+    setmetatable(o, self)
+    return o
+end
+
+return window
