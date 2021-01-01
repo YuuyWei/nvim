@@ -2,9 +2,6 @@
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
-repo = 'cespare/vim-toml'
-
-[[plugins]]
 repo = 'tyru/caw.vim'
 
 [[plugins]]
@@ -12,9 +9,6 @@ repo = 'junegunn/rainbow_parentheses.vim'
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
-
-[[plugins]]
-repo = 'rakr/vim-one'
 
 [[plugins]]
 repo = 'glepnir/zephyr-nvim'
@@ -30,134 +24,12 @@ repo = 'kyazdani42/nvim-web-devicons'
 repo = 'glepnir/galaxyline.nvim'
 depends = 'nvim-web-devicons'
 
+[[plugins]]
+repo = 'godlygeek/tabular'
 
 [[plugins]]
-repo = 'glepnir/dashboard-nvim'
+repo = 'git@github.com:YuuyWei/wiki.vim.git'
 hook_add = '''
-let g:dashboard_default_executive ='clap'
-let g:dashboard_custom_shortcut={
-	\ 'last_session'       : 'SPC s l',
-	\ 'find_history'       : 'SPC f h',
-	\ 'find_file'          : 'SPC f f',
-	\ 'new_file'           : 'SPC c n',
-	\ 'change_colorscheme' : 'SPC t c',
-	\ 'find_word'          : 'SPC f a',
-	\ 'book_marks'         : 'SPC f b',
-	\ }
-'''
-
-[[plugins]]
-repo = 'git@github.com:YuuyWei/ywvim.git'
-hook_add = '''
-let g:ywvim_ims= [
-            \ ['xh', '鹤形', 'xiaohe.ywvim'],
-            \ ['wb', '五笔', 'wubi.ywvim'],
-            \ ['py', '拼音', 'pinyin.ywvim'],
-            \ ]
-
-let g:ywvim_xh = { 'helpim':'xh', 'gb':0 }
-let g:ywvim_zhpunc = 1
-let g:ywvim_listmax = 3
-let g:ywvim_esc_autoff = 0
-let g:ywvim_autoinput = 2 "自动上屏
-let g:ywvim_circlecandidates = 1
-let g:ywvim_helpim_on = 1
-let g:ywvim_matchexact = 0
-let g:ywvim_chinesecode = 1
-let g:ywvim_gb = 0
-let g:ywvim_preconv = 'g2b'
-let g:ywvim_conv = ''
-let g:ywvim_lockb = 1
-let g:ywvim_theme = 'dark'
-let g:ywvim_intelligent_punc = 1
-'''
-
-[[plugins]]
-repo = 'junegunn/vim-easy-align'
-hook_add = '''
-nmap ga <Plug>(EasyAlign)
-xmap ga <Plug>(EasyAlign)
-
-let g:easy_align_delimiters = {
-            \ '>': { 'pattern': '>>\|=>\|>' },
-            \ '/': { 'pattern': '//\+\|/\*\|\*/', 
-            \        'ignore_groups': ['String'] },
-            \ '#': { 'pattern': '#\+', 'ignore_groups': ['String'], 
-            \        'delimiter_align': 'l' },
-            \ ']': {
-            \     'pattern':       '[[\]]',
-            \     'left_margin':   0,
-            \     'right_margin':  0,
-            \     'stick_to_left': 0
-            \   },
-            \ ')': {
-            \     'pattern':       '[()]',
-            \     'left_margin':   0,
-            \     'right_margin':  0,
-            \     'stick_to_left': 0
-            \   },
-            \ 'd': {
-            \     'pattern': ' \(\S\+\s*[;=]\)\@=',
-            \     'left_margin': 0,
-            \     'right_margin': 0
-            \   }
-            \ }
-'''
-
-[['plugins']]
-repo = 'YuuyWei/vimwiki'
-hook_add = '''
-let g:which_key_map.w = {
-            \ 'name': '+wiki',
-            \ 'i':    'wiki-diary-index',
-            \ 't':    'wiki-table-index',
-            \ 'w':    'wiki-index',
-            \ 's':    'wiki-select',
-            \ 'd':    'wiki-delete-file',
-            \ 'h':    'wiki-2HTML',
-            \ 'hh':    'wiki-2HTML&browse',
-            \ 'n':    'wiki-goto',
-            \ 'r':    'wiki-rename-file',
-            \ }
-
-let g:which_key_map.w.g = {
-            \ 'name': '+wiki-generate',
-            \ 'l': [':VimwikiGenerateLinks',  'wiki-generate-links'],
-            \ 't': [':VimwikiGenerateTagLinks',  'wiki-generate-tag-links'],
-            \ }
-
-let g:which_key_map.w[' '] = {
-            \ 'name': '+wiki-diary',
-            \ 'i':    'wiki-diary-generate-links',
-            \ 't':    'wiki-diary-tablemake-notes',
-            \ 'w':    'wiki-diary-make-notes',
-            \ 'm':    'wiki-diary-make-tomorrow-notes',
-            \ 'y':    'wiki-diary-make-yesterday-notes',
-            \ }
-let g:vimwiki_list = [{
-            \ 'path': '~/vimwiki/',
-            \ 'links_space_char': '_',
-            \ 'auto_tags': 1,
-            \ 'syntax': 'markdown',
-            \ 'ext': '.md'}]
-
-let g:vimwiki_filetypes = ['markdown', 'pandoc']
-
-let g:vimwiki_markdown_link_ext = 1
-
-" disable the insert mappings
-let g:vimwiki_key_mappings =
-            \ {
-            \   'all_maps': 1,
-            \   'global': 1,
-            \   'headers': 1,
-            \   'text_objs': 1,
-            \   'table_format': 1,
-            \   'table_mappings': 0,
-            \   'lists': 1,
-            \   'lists_return': 1,
-            \   'links': 1,
-            \   'html': 1,
-            \   'mouse': 0,
-            \ }
+let g:wiki_root = '~/vimwiki'
+let g:wiki_filetypes = ['md', 'wiki']
 '''
