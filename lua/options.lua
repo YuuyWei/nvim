@@ -23,6 +23,8 @@ function options:load_options()
         writebackup    = false,
         undofile       = true,
         swapfile       = false,
+        spelllang      = "en_us, cjk",
+        pastetoggle    = "<C-H>",
         directory      = global.cache_dir .. "swag/",
         undodir        = global.cache_dir .. "undo/",
         backupdir      = global.cache_dir .. "backup/",
@@ -89,8 +91,8 @@ function options:load_options()
         formatoptions  = "1jcroql",
         textwidth      = 78,
         expandtab      = true,
-        tabstop        = 4,
-        shiftwidth     = 4,
+        tabstop        = 2,
+        shiftwidth     = 2,
         softtabstop    = -1,
         autoindent     = true,
         breakindentopt = "shift:2,min:20",
@@ -108,7 +110,6 @@ function options:load_options()
     for name, value in pairs(self.global_local) do
         vim.o[name] = value
     end
-    vim.highlight.on_yank()
     pbind.bind_option(self.bw_local)
 end
 

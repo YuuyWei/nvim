@@ -18,10 +18,10 @@ function pfs.isdir(path)
 end
 
 function pfs.readAll(file)
-    local f = assert(io.open(file, "rb"))
-    local content = f:read("*all")
-    f:close()
-    return content
+  local f = assert(io.open(file, "rb"))
+  local content = f:read("*all")
+  f:close()
+  return content
 end
 
 return pfs

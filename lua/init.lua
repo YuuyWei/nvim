@@ -2,6 +2,7 @@ local options = require('options')
 local dein = require('dein')
 local global = require('global')
 local fs = require('publibs.plfs')
+local autocmd = require('event')
 local vim = vim
 
 -- Create cache dir and subs dir
@@ -11,7 +12,8 @@ local createdir = function ()
     global.cache_dir..'session',
     global.cache_dir..'swap',
     global.cache_dir..'tags',
-    global.cache_dir..'undo'
+    global.cache_dir..'undo',
+    global.cache_dir..'spell'
   }
   -- There only check once that If cache_dir exists
   -- Then I don't want to check subs dir exists
@@ -53,13 +55,16 @@ local leader_map = function()
 end
 
 local main = function()
-    createdir()
-    disable_distribution_plugins()
-    leader_map()
+  createdir()
+  disable_distribution_plugins()
+  leader_map()
+  require('mapping')
 
-    dein:load_repos()
-    options:load_options()
-    require('colorscheme.eviline')
+  dein:load_repos()
+  options:load_options()
+  autocmd.load_autocmds()
+  require('colorscheme.eviline')
+
 end
 
 main()

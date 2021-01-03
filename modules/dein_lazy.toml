@@ -1,16 +1,196 @@
-[['plugins']]
-repo = 'nvim-treesitter/nvim-treesitter'
-on_event = 'BufRead'
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = ['toml', 'markdown']
+
+
+[[plugins]]
+repo = 'voldikss/vim-floaterm'
+on_cmd = ['FloatermNew', 'FloatermToggle', 'FloatermPrev', 'FloatermNext', 'FloatermSend']
+hook_add = '''
+nnoremap   <silent>   <leader>tt    :FloatermNew<CR>
+nnoremap   <silent>   <leader>tp    :FloatermPrev<CR>
+nnoremap   <silent>   <leader>tn    :FloatermNext<CR>
+nnoremap   <silent>   <leader>ts    :FloatermToggle<CR>
+tnoremap   <silent>   <F7>    <C-\><C-n>:FloatermNew<CR>
+tnoremap   <silent>   <F8>    <C-\><C-n>:FloatermPrev<CR>
+tnoremap   <silent>   <F9>    <C-\><C-n>:FloatermNext<CR>
+tnoremap   <silent>   <F12>   <C-\><C-n>:FloatermToggle<CR>
+'''
+hook_source= '''
+let g:floaterm_position = 'center'
+let g:floaterm_wintype = 'floating'
+if has('windows')
+  let g:floaterm_shell = 'powershell'
+'''
+
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+on_ft = [
+  'html',
+  'css',
+  'javascript',
+  'javascriptreact',
+  'go',
+  'python',
+  'lua',
+  'rust',
+  'vim',
+  'less',
+  'stylus',
+  'sass',
+  'scss',
+  'json',
+  'ruby',
+  'toml',
+]
+
+[[plugins]]
+repo = 'luochen1990/rainbow'
+on_ft = [
+  'html',
+  'css',
+  'javascript',
+  'javascriptreact',
+  'go',
+  'python',
+  'lua',
+  'rust',
+  'vim',
+  'less',
+  'stylus',
+  'sass',
+  'scss',
+  'json',
+  'ruby',
+  'toml',
+]
+hook_source = '''
+let g:rainbow_active = 1
+'''
 
 [[plugins]]
 repo = 'plasticboy/vim-markdown'
 on_ft = 'markdown'
-on_source = '''
-let g:vim_markdown_autowrite = 1
-let g:vim_markdown_new_list_item_indent = 1
-let g:vim_markdown_math = 1
+hook_add = '''
+let g:vim_markdown_folding_level = 1
+let g:vim_markdown_folding_style_pythonic = 1
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_auto_insert_bullets = 1
+let g:vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_conceal_code_blocks = 0
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_strikethrough = 1
+let g:vim_markdown_edit_url_in = 'vsplit'
+let g:vim_markdown_fenced_languages = [
+  \ 'c++=cpp',
+  \ 'viml=vim',
+  \ 'bash=sh',
+  \ 'ini=dosini',
+  \ 'js=javascript',
+  \ 'json=javascript',
+  \ 'jsx=javascriptreact',
+  \ 'tsx=typescriptreact',
+  \ 'docker=Dockerfile',
+  \ 'makefile=make',
+  \ 'py=python'
+  \ ]
 '''
 
 [[plugins]]
-repo = 'cespare/vim-toml'
-on_ft = 'toml'
+repo = 'iamcco/markdown-preview.nvim'
+on_ft = ['markdown', 'pandoc.markdown', 'rmd']
+build = 'sh -c "cd app & yarn install"'
+hook_source = '''
+let g:mkdp_auto_start = 0
+'''
+
+[[plugins]]
+repo = 'godlygeek/tabular'
+on_cmd = 'Tabularize'
+
+
+[[plugins]]
+repo = 'nvim-telescope/telescope.nvim'
+on_cmd = 'Telescope'
+hook_add = '''
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope git_files<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+'''
+hook_source = '''
+lua <<EOF
+require('telescope').setup {
+  extensions = {
+    fzy_native = {
+      override_generic_sorter = false,
+      override_file_sorter = true,
+    }
+  }
+}
+require('telescope').load_extension('fzy_native')
+EOF
+'''
+
+[[plugins]]
+repo = 'nvim-telescope/telescope-fzy-native.nvim'
+on_source = 'telescope.nvim'
+
+[[plugins]]
+repo = 'brooth/far.vim'
+on_cmd = [ 'Far', 'Farp', 'F', 'Farr' ]
+hook_source = '''
+let g:far#source = 'rg'
+'''
+
+[['plugins']]
+repo = 'nvim-treesitter/nvim-treesitter'
+on_event = 'BufRead'
+on_if = 'has("unix")'
+hook_source = '''
+lua <<EOF
+vim.api.nvim_command('set foldmethod=expr')
+vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
+    move = {
+      enable = true,
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = "@class.outer",
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer",
+      },
+    },
+  },
+  ensure_installed = 'all'
+}
+EOF
+'''
+
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter-textobjects'
+on_if = 'has("unix")'
+on_source = 'nvim-treesitter'

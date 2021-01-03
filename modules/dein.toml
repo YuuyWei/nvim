@@ -5,17 +5,11 @@ repo = 'Shougo/dein.vim'
 repo = 'tyru/caw.vim'
 
 [[plugins]]
-repo = 'junegunn/rainbow_parentheses.vim'
-
-[[plugins]]
 repo = 'tpope/vim-fugitive'
 
 [[plugins]]
 repo = 'glepnir/zephyr-nvim'
 hook_add = 'colorscheme zephyr'
-
-[[plugins]]
-repo = 'jiangmiao/auto-pairs'
 
 [[plugins]]
 repo = 'kyazdani42/nvim-web-devicons'
@@ -24,8 +18,6 @@ repo = 'kyazdani42/nvim-web-devicons'
 repo = 'glepnir/galaxyline.nvim'
 depends = 'nvim-web-devicons'
 
-[[plugins]]
-repo = 'godlygeek/tabular'
 
 [[plugins]]
 repo = 'git@github.com:YuuyWei/wiki.vim.git'
@@ -33,3 +25,11 @@ hook_add = '''
 let g:wiki_root = '~/vimwiki'
 let g:wiki_filetypes = ['md', 'wiki']
 '''
+
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+[[plugins]]
+repo = 'nvim-lua/popup.nvim'
+
+
