@@ -58,11 +58,11 @@ local main = function()
   createdir()
   disable_distribution_plugins()
   leader_map()
-  require('mapping')
 
   dein:load_repos()
   options:load_options()
   autocmd.load_autocmds()
+  require('mapping')
   require('colorscheme.eviline')
 
 end

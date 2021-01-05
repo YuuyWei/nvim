@@ -108,34 +108,6 @@ let g:mkdp_auto_start = 0
 repo = 'godlygeek/tabular'
 on_cmd = 'Tabularize'
 
-
-[[plugins]]
-repo = 'nvim-telescope/telescope.nvim'
-on_cmd = 'Telescope'
-hook_add = '''
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope git_files<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-'''
-hook_source = '''
-lua <<EOF
-require('telescope').setup {
-  extensions = {
-    fzy_native = {
-      override_generic_sorter = false,
-      override_file_sorter = true,
-    }
-  }
-}
-require('telescope').load_extension('fzy_native')
-EOF
-'''
-
-[[plugins]]
-repo = 'nvim-telescope/telescope-fzy-native.nvim'
-on_source = 'telescope.nvim'
-
 [[plugins]]
 repo = 'brooth/far.vim'
 on_cmd = [ 'Far', 'Farp', 'F', 'Farr' ]
@@ -143,54 +115,98 @@ hook_source = '''
 let g:far#source = 'rg'
 '''
 
-[['plugins']]
-repo = 'nvim-treesitter/nvim-treesitter'
-on_event = 'BufRead'
-on_if = 'has("unix")'
-hook_source = '''
-lua <<EOF
-vim.api.nvim_command('set foldmethod=expr')
-vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
-      },
-    },
-    move = {
-      enable = true,
-      goto_next_start = {
-        ["]m"] = "@function.outer",
-        ["]]"] = "@class.outer",
-      },
-      goto_next_end = {
-        ["]M"] = "@function.outer",
-        ["]["] = "@class.outer",
-      },
-      goto_previous_start = {
-        ["[m"] = "@function.outer",
-        ["[["] = "@class.outer",
-      },
-      goto_previous_end = {
-        ["[M"] = "@function.outer",
-        ["[]"] = "@class.outer",
-      },
-    },
-  },
-  ensure_installed = 'all'
-}
-EOF
+# [['plugins']]
+# repo = 'nvim-treesitter/nvim-treesitter'
+# on_event = 'BufRead'
+# hook_source = '''
+# lua <<EOF
+# vim.api.nvim_command('set foldmethod=expr')
+# vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
+# require'nvim-treesitter.configs'.setup {
+#   highlight = {
+#     enable = true,
+#   },
+#   textobjects = {
+#     select = {
+#       enable = true,
+#       keymaps = {
+#         ["af"] = "@function.outer",
+#         ["if"] = "@function.inner",
+#         ["ac"] = "@class.outer",
+#         ["ic"] = "@class.inner",
+#       },
+#     },
+#     move = {
+#       enable = true,
+#       goto_next_start = {
+#         ["]m"] = "@function.outer",
+#         ["]]"] = "@class.outer",
+#       },
+#       goto_next_end = {
+#         ["]M"] = "@function.outer",
+#         ["]["] = "@class.outer",
+#       },
+#       goto_previous_start = {
+#         ["[m"] = "@function.outer",
+#         ["[["] = "@class.outer",
+#       },
+#       goto_previous_end = {
+#         ["[M"] = "@function.outer",
+#         ["[]"] = "@class.outer",
+#       },
+#     },
+#   },
+#   ensure_installed = 'all'
+# }
+# EOF
+# '''
+# 
+# [[plugins]]
+# repo = 'nvim-treesitter/nvim-treesitter-textobjects'
+# on_source = 'nvim-treesitter'
+
+[[plugins]]
+repo= 'nvim-lua/completion-nvim'
+on_event= ['BufReadPre','BufNewFile']
+hook_add= '''
+let g:completion_enable_auto_hover = 0
+let g:completion_auto_change_source = 1
+let g:completion_trigger_keyword_length = 2
+let g:completion_enable_auto_popup = 1
+let g:completion_matching_ignore_case = 1
+let g:completion_enable_snippet = 'vim-vsnip'
+let g:completion_confirm_key = ""
+let g:completion_chain_complete_list = [
+  \  {'complete_items': ['lsp']},
+  \  {'complete_items': ['snippet']},
+  \  {'complete_items': ['buffers']},
+  \  {'complete_items': ['path']},
+  \  {'mode': '<c-p>'},
+  \  {'mode': '<c-n>'}
+  \]
+'''
+hook_source= '''
+autocmd BufReadPre,BufNewFile * lua require'completion'.on_attach()
+imap <expr> <cr>  pumvisible() ? complete_info()["selected"] != "-1" ?
+      \ "\<Plug>(completion_confirm_completion)"  : "\<c-e>\<CR>" :  "\<CR>"
+" imap <tab> <Plug>(completion_smart_tab)
+" imap <s-tab> <Plug>(completion_smart_s_tab)
 '''
 
 [[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter-textobjects'
-on_if = 'has("unix")'
-on_source = 'nvim-treesitter'
+repo= 'steelsojka/completion-buffers'
+on_source= 'completion-nvim'
+hook_source= '''
+let g:completion_word_ignored_ft = ['LuaTree','vista']
+'''
+
+[[plugins]]
+repo= 'hrsh7th/vim-vsnip'
+on_event= 'InsertCharPre'
+hook_source= '''
+let g:vsnip_snippet_dir = stdpath("config") . "/snippets"
+'''
+
+[[plugins]]
+repo= 'hrsh7th/vim-vsnip-integ'
+on_event= 'InsertCharPre'

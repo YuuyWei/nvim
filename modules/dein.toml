@@ -18,12 +18,11 @@ repo = 'kyazdani42/nvim-web-devicons'
 repo = 'glepnir/galaxyline.nvim'
 depends = 'nvim-web-devicons'
 
-
 [[plugins]]
 repo = 'git@github.com:YuuyWei/wiki.vim.git'
 hook_add = '''
 let g:wiki_root = '~/vimwiki'
-let g:wiki_filetypes = ['md', 'wiki']
+let g:wiki_filetypes = ['md']
 '''
 
 [[plugins]]
@@ -32,4 +31,31 @@ repo = 'nvim-lua/plenary.nvim'
 [[plugins]]
 repo = 'nvim-lua/popup.nvim'
 
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+hook_add = '''
+'''
 
+[[plugins]]
+repo = 'nvim-telescope/telescope.nvim'
+hook_add = '''
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope git_files<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+lua <<EOF
+require('telescope').setup {
+  extensions = {
+    fzy_native = {
+      override_generic_sorter = false,
+      override_file_sorter = true,
+    }
+  }
+}
+require('telescope').load_extension('fzy_native')
+EOF
+'''
+
+[[plugins]]
+repo = 'nvim-telescope/telescope-fzy-native.nvim'
+on_source = 'telescope.nvim'
