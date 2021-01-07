@@ -1,0 +1,67 @@
+[ftplugin]
+_ = '''
+  " Disable automatically insert comment.
+  setl formatoptions-=r
+  setl formatoptions-=o
+  setl formatoptions+=mMBl
+  " Disable auto wrap.
+  if &l:textwidth != 70 && &filetype !=# 'help'
+    setlocal textwidth=0
+  endif
+  " Use FoldCCtext().
+  if &filetype !=# 'help'
+    setlocal foldtext=FoldCCtext()
+  endif
+  if !&l:modifiable
+    setlocal nofoldenable
+    setlocal foldcolumn=0
+    setlocal colorcolumn=
+  endif
+'''
+
+python = '''
+" Indent settings.
+"setlocal foldmethod=indent
+setlocal softtabstop=4
+setlocal shiftwidth=4
+setlocal textwidth=80
+setlocal smarttab
+setlocal expandtab
+setlocal nosmartindent
+'''
+
+html = '''
+setlocal includeexpr=substitute(v:fname,'^\\/','','')
+setlocal path+=./;/
+'''
+
+go = '''
+highlight default link goErr WarningMsg
+match goErr /\<err\>/
+'''
+
+vim = '''
+if line('$') > 1000
+  syntax sync minlines=200
+endif
+"setlocal foldmethod=indent
+setlocal shiftwidth=2 softtabstop=2
+setlocal iskeyword+=:,#
+'''
+
+qfreplace = 'setlocal nofoldenable'
+
+toml = 'syntax sync minlines=100'
+
+help = '''
+setlocal iskeyword+=:
+setlocal iskeyword+=#
+setlocal iskeyword+=-
+'''
+
+ruby = '''
+setlocal iskeyword+=!
+setlocal iskeyword+=?
+setlocal omnifunc=
+setlocal shiftwidth=2 softtabstop=2 tabstop=2
+'''

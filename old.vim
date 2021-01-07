@@ -834,8 +834,7 @@ let which_key_map.t = {
 "=============================================================================
 augroup md_im_paste
     autocmd!
-autocmd FileType markdown nmap <buffer><silent> <leader>mi :call
-            \ mdip#MarkdownClipboardImage()<CR>
+autocmd FileType markdown nmap <buffer><silent> <leader>mi :call \ mdip#MarkdownClipboardImage()<CR>
 augroup END
 let g:which_key_map.m.i = 'markdown-img-paste'
 " there are some defaults for image directory and image name, you can change

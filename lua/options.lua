@@ -104,7 +104,7 @@ function options:load_options()
         foldmethod     = "marker",
         signcolumn     = "yes",
         conceallevel   = 2,
-        concealcursor  = "niv",
+        -- concealcursor  = "niv",
     }
 
     for name, value in pairs(self.global_local) do

@@ -59,3 +59,16 @@ EOF
 [[plugins]]
 repo = 'nvim-telescope/telescope-fzy-native.nvim'
 on_source = 'telescope.nvim'
+
+
+[[plugins]]
+repo = 'skywind3000/asyncrun.vim'
+hook_add = '''
+command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+'''
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'tpope/vim-repeat'

@@ -78,9 +78,8 @@ let g:vim_markdown_frontmatter = 1
 let g:vim_markdown_auto_insert_bullets = 1
 let g:vim_markdown_new_list_item_indent = 0
 let g:vim_markdown_conceal_code_blocks = 0
-let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal = 1
 let g:vim_markdown_strikethrough = 1
-let g:vim_markdown_edit_url_in = 'vsplit'
 let g:vim_markdown_fenced_languages = [
   \ 'c++=cpp',
   \ 'viml=vim',
@@ -210,3 +209,13 @@ let g:vsnip_snippet_dir = stdpath("config") . "/snippets"
 [[plugins]]
 repo= 'hrsh7th/vim-vsnip-integ'
 on_event= 'InsertCharPre'
+
+[[plugins]]
+repo = 'ferrine/md-img-paste.vim'
+on_ft = ['markdown', 'pandoc.markdown', 'rmd']
+hook_source = '''
+augroup md_im_paste
+    autocmd!
+autocmd FileType markdown nmap <buffer><silent> <leader>mi :call mdip#MarkdownClipboardImage()<CR>
+augroup END
+'''
