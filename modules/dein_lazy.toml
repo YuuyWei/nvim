@@ -116,56 +116,6 @@ hook_source = '''
 let g:far#source = 'rg'
 '''
 
-# [['plugins']]
-# repo = 'nvim-treesitter/nvim-treesitter'
-# on_event = 'BufRead'
-# hook_source = '''
-# lua <<EOF
-# vim.api.nvim_command('set foldmethod=expr')
-# vim.api.nvim_command('set foldexpr=nvim_treesitter#foldexpr()')
-# require'nvim-treesitter.configs'.setup {
-#   highlight = {
-#     enable = true,
-#   },
-#   textobjects = {
-#     select = {
-#       enable = true,
-#       keymaps = {
-#         ["af"] = "@function.outer",
-#         ["if"] = "@function.inner",
-#         ["ac"] = "@class.outer",
-#         ["ic"] = "@class.inner",
-#       },
-#     },
-#     move = {
-#       enable = true,
-#       goto_next_start = {
-#         ["]m"] = "@function.outer",
-#         ["]]"] = "@class.outer",
-#       },
-#       goto_next_end = {
-#         ["]M"] = "@function.outer",
-#         ["]["] = "@class.outer",
-#       },
-#       goto_previous_start = {
-#         ["[m"] = "@function.outer",
-#         ["[["] = "@class.outer",
-#       },
-#       goto_previous_end = {
-#         ["[M"] = "@function.outer",
-#         ["[]"] = "@class.outer",
-#       },
-#     },
-#   },
-#   ensure_installed = 'all'
-# }
-# EOF
-# '''
-# 
-# [[plugins]]
-# repo = 'nvim-treesitter/nvim-treesitter-textobjects'
-# on_source = 'nvim-treesitter'
-
 [[plugins]]
 repo= 'nvim-lua/completion-nvim'
 on_event= ['BufReadPre','BufNewFile']
@@ -225,6 +175,7 @@ augroup END
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 on_event = 'BufRead'
+if = 'has("unix")'
 hook_post_update = 'TSUpdate'
 hook_source = '''
 lua <<EOF
